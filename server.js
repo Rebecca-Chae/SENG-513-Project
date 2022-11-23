@@ -1,3 +1,4 @@
+// server-side JS code
 const express = require("express");
 const http = require("http");
 const path = require("path");
@@ -22,4 +23,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // start the server
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
+});
+
+// handle a socket connection request from web client
+// note: `socket` param is the client that has connected
+io.on("connection", (socket) => {
+  console.log("New web socket connection");
 });
