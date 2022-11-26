@@ -1,4 +1,6 @@
 # SENG-513-Project
+- Semester: Fall 2022
+- Project name: Go Groceries
 
 ## Getting started with this repo
 
