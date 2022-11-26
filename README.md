@@ -2,7 +2,7 @@
 - Semester: Fall 2022
 - Project name: Go Groceries
 
-# Group Members:
+## Group Members:
 - Hafsa Zia (30076662)
 - Isabella Guimet Pedraz (30040654)
 - Soumya Praveen Kumaria (10124004)
