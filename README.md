@@ -1,6 +1,15 @@
 # SENG-513-Project
 - Semester: Fall 2022
 - Project name: Go Groceries
+- Group Members:
+    -Hafsa Zia (30076662)
+    -Isabella Guimet Pedraz (30040654)
+    -Soumya Praveen Kumaria (10124004)
+    -Sydney Kwok (30073206)
+    -Vi Tsang (30063550)
+    -YuJeong Chae (30091378)
+
+
 
 ## Getting started with this repo
 
