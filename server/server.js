@@ -17,8 +17,8 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 // set the static folder -- the folder that the server serves to the client
-// we are setting it to the `public` folder since this contains all the client-side code.
-app.use(express.static(path.join(__dirname, "public")));
+// we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
+app.use(express.static(path.join(__dirname, "../client/public")));
 
 // start the server
 server.listen(PORT, () => {
