@@ -1,4 +1,11 @@
-h1 {
-    /* this is just to have something in this file...can remove later */
-    color: #3ECAC1;
+body {
+    margin: 0;
+}
+
+/* Nav bar with website logo */
+#logo {
+    background: #3ECAC1;
+    padding: 20px;
+    border: 2px solid #3ECAC1;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.10);
 }
