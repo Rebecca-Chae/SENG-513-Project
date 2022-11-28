@@ -1,8 +1,13 @@
 // server-side JS code
 const express = require("express");
 const http = require("http");
+const mongoose = require("mongoose");
 const path = require("path");
 const socketio = require("socket.io");
+
+// ideally this uri would be put in a .env file, along with the PORT var (more secure if they aren't visible and pushed
+// to our repo), but this works for now
+const MONGODB_URI = "mongodb+srv://db-user:db-pass@cluster0.ofuaylx.mongodb.net/?retryWrites=true&w=majority";
 
 // in development: the port will always be 3000.
 // in production: if we host the app on some service (e.g., AWS), the host may independently
@@ -19,6 +24,17 @@ const io = socketio(server);
 // set the static folder -- the folder that the server serves to the client
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
 app.use(express.static(path.join(__dirname, "../client/public")));
+
+// configure the app to parse incoming JSON requests & put the parsed data in req.body
+app.use(express.json());
+
+// open a connection to our mongodb cluster
+mongoose.connect(MONGODB_URI);
+
+const connection = mongoose.connection;
+connection.once('open', () => {
+    console.log("Successfully established connection to MongoDB cluster");
+});
 
 // start the server
 server.listen(PORT, () => {
