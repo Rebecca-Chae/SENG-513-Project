@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 // create server with the express app
 const server = http.createServer(app);
-// pass the server into socket.io
-const io = socketio(server);
+// pass the server into socket.io, export the socket.io server to other modules
+const io = exports.io = socketio(server);
 
 // set the static folder -- the folder that the server serves to the client
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
@@ -32,9 +32,13 @@ app.use(express.json());
 mongoose.connect(MONGODB_URI);
 
 const connection = mongoose.connection;
-connection.once('open', () => {
+connection.once("open", () => {
     console.log("Successfully established connection to MongoDB cluster");
 });
+
+// add users route
+const usersRouter = require("./routes/users");
+app.use("/users", usersRouter);
 
 // start the server
 server.listen(PORT, () => {
