@@ -3,10 +3,7 @@ body {
 }
 
 #logo {
-    color: white;
     background: #3ECAC1;
-    font-size: xx-large;
-    font-family: "Apple Chancery", cursive;
     padding: 20px;
     border: 2px solid #3ECAC1;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.10);
