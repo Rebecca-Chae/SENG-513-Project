@@ -1,0 +1,29 @@
+{
+  "name": "seng-513-project",
+  "version": "1.0.0",
+  "description": "group project for seng 513",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rebecca-Chae/SENG-513-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rebecca-Chae/SENG-513-Project/issues"
+  },
+  "homepage": "https://github.com/Rebecca-Chae/SENG-513-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^4.12.0",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
