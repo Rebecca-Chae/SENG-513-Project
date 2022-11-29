@@ -9,3 +9,43 @@ body {
     border: 2px solid #3ECAC1;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.10);
 }
+
+section {
+    padding-left: 25px;
+}
+
+/* Single list component name */
+#list-title {
+    color: #186368;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-weight: bolder;
+    font-size: xx-large;
+    line-height: 67px;
+    text-decoration-line: underline;
+}
+
+#flex-container {
+    display: flex;
+    column-gap: 200px;
+    height: 400px;
+}
+
+.btn-primary {
+    background-color: white;
+    color: #3ECAC1;
+    width: 300px;
+    text-align: start;
+    border-color: #3ECAC1;
+}
+
+.btn-primary:hover {
+    background-color: #3ECAC1;
+    border-color: #3ECAC1;
+}
+
+/* Refers to expanded to-do list component */
+.card {
+    height: 200px;
+    background-color: #3ECAC1;
+    color: white;
+}
