@@ -14,7 +14,7 @@ section {
     padding-left: 25px;
 }
 
-/* Single list component name */
+/* Name of list page */
 #list-title {
     color: #186368;
     font-family: 'Baloo Da 2', sans-serif;
@@ -24,12 +24,21 @@ section {
     text-decoration-line: underline;
 }
 
+/* Contains both list name button and to-do card component */
 #flex-container {
     display: flex;
     column-gap: 200px;
     height: 400px;
 }
 
+/* Contains only the list name button */
+#list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* A single list button (ex: Baked Salmon) */
 .btn-primary {
     background-color: white;
     color: #3ECAC1;
@@ -39,6 +48,24 @@ section {
 }
 
 .btn-primary:hover {
+    background-color: #3ECAC1;
+    border-color: #3ECAC1;
+}
+
+/* Add List button */
+.btn-outline-primary {
+    color: black;
+    border-color: #3ECAC1;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-style: normal;
+    width: 100px;
+    /* This styling below could be added if we wanted this "Add List" button to always be positioned at page bottom */
+    /*position: absolute;*/
+    /*bottom: 100px;*/
+}
+
+.btn-outline-primary:hover {
+    color: white;
     background-color: #3ECAC1;
     border-color: #3ECAC1;
 }
