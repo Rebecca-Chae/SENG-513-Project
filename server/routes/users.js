@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 
 const io = require("../server").io;
@@ -23,6 +21,9 @@ router.route("/user/:username").get((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+// TODO: define POST endpoint for user authentication (exists user in db with given username & password)
+
+
 // POST REQUESTS
 
 // create new user, save to db, return newly added user
@@ -33,21 +34,11 @@ router.route("/sign-up").post((req, res) => {
         username: username, password: password
     });
 
-    // hash password with a salt
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(password, salt, (err, hash) => {
-            // set newUser password to the hashed password
-            newUser.password = hash;
-
-            // generate a token that expires in 300 seconds (5 min)
-            const token = jwt.sign({ username: username }, "somesecret");
-
-            // save the user to the db
-            newUser.save()
-                .then(() => res.status(200).json({ userInfo: newUser, "token": token }))
-                .catch(err => res.status(400).json("Error: " + err));
-        });
-    });
+    // save the user to the db
+    newUser.save()
+        // see if .then(result => res.status(200).json(result))
+        .then(() => res.status(200).json({ userInfo: newUser }))
+        .catch(err => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
