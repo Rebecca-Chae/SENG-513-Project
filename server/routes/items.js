@@ -6,12 +6,16 @@ const List = require("../models/list.model");
 
 // Create item with category, ID of the list it belongs to
 router.route("/add-item").post((req, res) => {
-    const itemName = req.body.itemName;
-    List.find({ _id: req.body.listID })
-        .then(() => {
-            const newItem = new Item({ itemName: itemName, category: req.body.category, listID: req.body.listID })
-            newItem.save()
+    List.findOne({ _id: req.body.listID })
+        .then(list => {
+            if (list === null) {
+                res.status(400).json(`Error: no list with ID ${req.body.listID} exists`);
+            } else {
+                const newItem = new Item({ itemName: req.body.itemName, category: req.body.category, listID: req.body.listID });
+                newItem.save()
                     .then(() => res.status(200).json())
+                    .catch(err => res.status(500).json("Error: " + err));
+            }
         })
         .catch(err => res.status(500).json("Error: " + err));
 });
