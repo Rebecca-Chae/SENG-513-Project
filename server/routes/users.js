@@ -38,17 +38,32 @@ router.route("/login").post((req, res) => {
 // POST REQUESTS
 
 // create new user, save to db, return newly added user
-router.route("/sign-up").post((req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const newUser = new User({
-        username: username, password: password
-    });
+router.route("/sign-up").post(async (req, res) => {
+    try {
+        const username = req.body.username;
+        const password = req.body.password;
+        // note: confirmPass not added to schema because it is not written to the db
+        const confirmPass = req.body.confirmPass;
 
-    // save the user to the db
-    newUser.save()
-        .then(() => res.status(200).json({ userInfo: newUser }))
-        .catch(err => res.status(500).json("Error: " + err));
+        if (password !== confirmPass) {
+            res.status(400).json("Error: passwords don't match");
+        } else {
+            const newUser = new User({
+                username: username, password: password
+            });
+
+            // save the user to the db
+            await newUser.save();
+            res.status(200).json({ userInfo: newUser });
+        }
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            // case that request is missing required username or password
+            res.status(400).json("Error: " + err);
+        } else {
+            res.status(500).json("Error: " + err);
+        }
+    }
 });
 
 module.exports = router;
