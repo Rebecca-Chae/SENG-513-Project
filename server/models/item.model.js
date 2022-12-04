@@ -13,7 +13,10 @@ const itemSchema = new Schema({
         required: true
     },
     notes: String,
-    checked: Boolean,
+    checked: {
+        type: Boolean,
+        default: false
+    },
     listID: {
         type: String,
         required: true

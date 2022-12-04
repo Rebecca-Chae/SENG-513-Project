@@ -43,3 +43,5 @@ router.route("/update-category/:itemID").post((req, res) => {
         .then(() => res.status(200).json())
         .catch(err => res.status(500).json("Error: " + err));
 });
+
+module.exports = router;
