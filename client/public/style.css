@@ -32,10 +32,19 @@ section {
 }
 
 /* Contains only the list name button */
-#list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#lists-container {
+    /* This overflow adds a scroll bar to this div */
+    overflow: auto;
+    height: 400px;
+    width: 400px;
+}
+
+/* Contains only the to-do card component */
+#cards-container {
+    /* This overflow adds a scroll bar to this div */
+    overflow: auto;
+    height: 600px;
+    width: 750px;
 }
 
 /* A single list button (ex: Baked Salmon) */
@@ -59,9 +68,10 @@ section {
     font-family: 'Baloo Da 2', sans-serif;
     font-style: normal;
     width: 100px;
-    /* This styling below could be added if we wanted this "Add List" button to always be positioned at page bottom */
-    /*position: absolute;*/
-    /*bottom: 100px;*/
+    /* This styling is added if we want this "Add List" button to always be positioned at the bottom of the page  */
+    position: absolute;
+    left: 100px;
+    top: 650px;
 }
 
 .btn-outline-primary:hover {
