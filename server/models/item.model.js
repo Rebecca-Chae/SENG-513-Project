@@ -8,7 +8,10 @@ const itemSchema = new Schema({
         trim: true,
     },
     price: Number,
-    category: String,
+    category: {
+        type: String,
+        required: true
+    },
     notes: String,
     checked: Boolean,
     listID: {
