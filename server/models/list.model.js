@@ -33,6 +33,6 @@ const listSchema = new Schema({
     timestamps: true
 });
 
-const List = mongoose.model("List", userSchema);
+const List = mongoose.model("List", listSchema);
 
-module.exports = User;
+module.exports = List;
