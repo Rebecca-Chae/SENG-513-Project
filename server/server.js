@@ -40,6 +40,10 @@ connection.once("open", () => {
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 
+// add lists route
+const listRouter = require("./routes/lists");
+app.use("/lists", listsRouter);
+
 // start the server
 server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
