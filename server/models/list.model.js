@@ -18,21 +18,22 @@ const listSchema = new Schema({
         type: String,
         required: true
     },
-    shared: {
-        user: {
+    shared: [
+        {
+            user: {
                 type: String,
                 required: true,
                 trim: true
             }, 
-        permission: {
-            type: String,
-            required: true,
-            trim: true}
-    }   
+            permission: {
+                type: String,
+                required: true,
+                trim: true}
+        }
+    ]
 }, {
     timestamps: true
 });
 
 const List = mongoose.model("List", listSchema);
-
 module.exports = User;
