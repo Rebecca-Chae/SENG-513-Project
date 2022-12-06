@@ -36,14 +36,28 @@ router.route("/:itemID").post((req, res) => {
 
 // Add/ Change price, method: POST
 router.route("/update-price/:itemID").post((req, res) => {
-    Item.updateOne({ _id: req.params.itemID }, { $set: {price: req.body.price } })
+    Item.updateOne({ _id: req.params.itemID }, { $set: { price: req.body.price } })
         .then(() => res.status(200).json())
         .catch(err => res.status(500).json("Error: " + err));
 });
 
 // Change category, method: POST
 router.route("/update-category/:itemID").post((req, res) => {
-    Item.updateOne({ _id: req.params.itemID }, { $set: {category: req.body.category } })
+    Item.updateOne({ _id: req.params.itemID }, { $set: { category: req.body.category } })
+        .then(() => res.status(200).json())
+        .catch(err => res.status(500).json("Error: " + err));
+});
+
+// Add/ Change notes, method: POST
+router.route("/update-notes/:itemID").post((req, res) => {
+    Item.updateOne({ _id: req.params.itemID }, { $set: { notes: req.body.notes } })
+        .then(() => res.status(200).json())
+        .catch(err => res.status(500).json("Error: " + err));
+});
+
+// Change check status, method: POST
+router.route("/checked/:itemID").post((req, res) => {
+    Item.updateOne({ _id: req.params.itemID }, { $set: { checked: req.body.checked } })
         .then(() => res.status(200).json())
         .catch(err => res.status(500).json("Error: " + err));
 });
