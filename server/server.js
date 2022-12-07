@@ -8,7 +8,7 @@ const socketio = require("socket.io");
 
 // ideally this uri would be put in a .env file, along with the PORT var (more secure if they aren't visible and pushed
 // to our repo), but this works for now
-const MONGODB_URI = "mongodb+srv://db-user:db-pass@cluster0.ofuaylx.mongodb.net/?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb+srv://db-user:db-pass@cluster0.ofuaylx.mongodb.net/go_groceries?retryWrites=true&w=majority";
 
 // in development: the port will always be 3000.
 // in production: if we host the app on some service (e.g., AWS), the host may independently
