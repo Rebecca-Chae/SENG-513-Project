@@ -3,6 +3,19 @@ const socket = io();
 
 let addListButton = document.getElementById('add-list-button');
 addListButton.addEventListener('click', function () {
+
+    const allInnerCards = document.querySelectorAll('.inner-card');
+
+    // Checks each inner card based on if it's collapsed or not. If it's collapsed, hide the div. Otherwise, show the div
+    allInnerCards.forEach(card => {
+        card.addEventListener('hide.bs.collapse', function () {
+            card.setAttribute("hidden", "");
+        });
+        card.addEventListener('show.bs.collapse', function () {
+            card.removeAttribute("hidden");
+        });
+    })
+
     // Gets all list buttons created
     let buttonsCreated = document.getElementsByClassName("btn btn-primary");
     let lengthOfButtons = buttonsCreated.length;
