@@ -1,4 +1,5 @@
 // server-side JS code
+const cors = require("cors");
 const express = require("express");
 const http = require("http");
 const mongoose = require("mongoose");
@@ -19,11 +20,16 @@ const app = express();
 // create server with the express app
 const server = http.createServer(app);
 // pass the server into socket.io, export the socket.io server to other modules
-const io = exports.io = socketio(server);
+const io = exports.io = socketio(server, {
+    cors:{origin:'*'}
+});
+
 
 // set the static folder -- the folder that the server serves to the client
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
 app.use(express.static(path.join(__dirname, "../client/public")));
+
+app.use(cors());
 
 // configure the app to parse incoming JSON requests & put the parsed data in req.body
 app.use(express.json());
