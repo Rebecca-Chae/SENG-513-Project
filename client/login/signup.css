@@ -11,3 +11,21 @@
     border-color: #3ECAC1;
     border-style: initial;
 }
+
+#password-error{
+    color: red;
+}
+
+#password-re-enter-error{
+    color: red;
+}
+
+#username-error{
+    color: red;
+
+}
+
+#register-error{
+    color: red;
+    justify-content: center;
+}

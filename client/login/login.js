@@ -12,9 +12,8 @@ async function createAccount(usr, pass, confirmPass) {
         },
     body: JSON.stringify(body_js),
     })
-        // .then(response => response.json())
-        // .then(response => console.log(JSON.stringify(response)))
-    if(response.status == 200) {
+
+    if(response.status === 200) {
         console.log(response)
         console.log(JSON.stringify(response.json()))
         console.log("Account created")
@@ -22,8 +21,12 @@ async function createAccount(usr, pass, confirmPass) {
     else{
         console.log("Account did not get created")
         console.log(response.status)
-        if(response.status == 400){
-            alert("The account already exists. Please try logging in instead.")
+        if(response.status === 400 && usr!="" && pass!="" && confirmPass!="" ){
+            let registerError = document.getElementById("register-error").innerText = "The account already exists. Please try logging in instead."
+        }
+        else if(response.status === 500){
+            let registerError = document.getElementById("register-error").innerText = "An unexpected error has occurred. Please try again later."
+
         }
     }
 
@@ -41,13 +44,13 @@ function checkPasswordIsSame(pass, confirmPass) {
 
 function checkInfoFilled(usr, pass, confirmPass) {
     if(usr==""){
-        alert("ERROR: Please enter the username")
+       let error_usr = document.getElementById("username-error").innerText = "Please enter a username."
     }
     else if(pass==""){
-        alert("ERROR: Please enter the password")
+        let error_password = document.getElementById("password-error").innerText ="Please enter a password"
     }
     else if(confirmPass==""){
-        alert("ERROR: Please enter the password in confirm password field")
+        let error_re_enter_password = document.getElementById("password-re-enter-error").innerText ="Please enter a password"
     }
 }
 
@@ -58,7 +61,8 @@ function getInfo(){
     checkInfoFilled(username.value, password.value, confirmPassword.value);
     let checkPass = checkPasswordIsSame(password.value, confirmPassword.value);
     if(checkPass == false){
-        alert("ERROR: Re-enter the password, it doesn't match")
+        let error_password = document.getElementById("password-error").innerText ="The password doesn't match. Please re-enter the password"
+        let error_re_enter_password = document.getElementById("password-re-enter-error").innerText ="The password doesn't match. Please re-enter the password"
 
 
 
