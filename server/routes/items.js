@@ -4,6 +4,13 @@ const io = require("../server").io;
 const Item = require("../models/item.model");
 const List = require("../models/list.model");
 
+// Get all items in the list, method: POST
+router.route("/get-items").get((req, res) => {
+    List.findOne({ _id: req.body.listID })
+        .then(items => res.json(items))
+        .catch(err => res.status(500).json("Error: " + err));
+});
+
 // Create item with category, ID of the list it belongs to
 router.route("/add-item").post((req, res) => {
     List.findOne({ _id: req.body.listID })
