@@ -19,4 +19,21 @@ addListButton.addEventListener('click', function () {
         "</p>");
 })
 
+const exampleModal = document.getElementById('exampleModal');
+exampleModal.addEventListener('show.bs.modal', (e) => {
+  // Button that triggered the modal
+  const buttonforadditem = e.relatedTarget;
+  // Extract info from data-mdb-* attributes
+  const recipient = buttonforadditem.getAttribute('data-bs-whatever');
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  const modalTitle = exampleModal.querySelector('.modal-title');
+  const modalBodyInput = exampleModal.querySelector('.modal-body input');
+
+  modalTitle.textContent = `Add to List ${recipient}`;
+  //modalBodyInput.value = recipient;
+})
+
 console.log("hello from client");

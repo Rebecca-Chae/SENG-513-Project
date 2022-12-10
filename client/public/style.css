@@ -72,7 +72,43 @@ section {
 
 /* Refers to expanded to-do list component */
 .card {
-    height: 200px;
+    height: 400px;
     background-color: #3ECAC1;
     color: white;
+    overflow: auto;
+}
+
+.list{
+    padding: 0 !important;
+    width: 200 px;
+}
+.list li{
+    list-style: none;
+    margin-right: 10px;
+
+}
+.list input{
+    margin-right: 10px;
+
+}
+hr.new1{
+    border: 1px solid black;
+}
+#notes-label{
+    float:right;
+    margin-right: 322px;
+}
+
+#budget-label{
+    float:left;
+    margin-left: 540px;
+}
+.btn-outline-add-item {
+    color: black;
+    border-color: #3ECAC1;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-style: normal;
+    width: 100px;
+    background-color: white;
+    
 }
