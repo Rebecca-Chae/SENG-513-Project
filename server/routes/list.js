@@ -61,7 +61,7 @@ router.route("/add-user/:listID").post((req, res) => {
 //Get all the lists of the user
 router.route("/get-user-lists/:username").get((req, res) => {
     List.find({
-        $or: [ {"creator": username}, {"shared.user": username}]
+        $or: [ {"creatorID": username}, {"shared.user": username}]
     })
         .then(lists => res.status(200).json(lists))
         .catch(err => res.status(400).json("Error: " + err))
