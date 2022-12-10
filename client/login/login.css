@@ -11,12 +11,42 @@
         height: 100%;
     }
 }
-.form-control{
-    border-style: solid;
+
+#usrLogin{
+    border-color: #3ECAC1;
+
+}
+
+#passLogin{
     border-color: #3ECAC1;
 }
 
-.mb-3{
+.my-4{
+    color: #3ECAC1;
     border-color: #3ECAC1;
     border-style: solid;
+}
+
+#signupBtn{
+    background-color: #3ECAC1;
+    color: white;
+    text-decoration: none;
+}
+a {
+    color: #FFF;
+}
+
+#loginBtn{
+    background-color: #3ECAC1;
+}
+
+#username-error-login-label{
+    color: red;
+}
+
+#password-error-login-label{
+    color: red;
+}
+#loginError{
+    color:red;
 }

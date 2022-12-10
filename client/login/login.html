@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Go Grocery</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css" rel="stylesheet"/>
 <!-- Template from -  https://mdbootstrap.com/docs/standard/extended/login/-->
 </head>
@@ -16,26 +16,31 @@
               <img src="basket.png" style="height: 150px">
               <h3 class="fw-normal mb-3 pb-5" style="letter-spacing: 1px;"></h3>
               <div class="mb-3">
-                <label class="username-label" style="alignment: left">Username</label>
-                <input type="text" class="form-control" id="formGroupExampleInput"  style="border-color: #3ECAC1;">
+                <label id="username-label" >Username</label>
+                <input type="text" class="form-control" id="usrLogin">
+                <label id ="username-error-login-label"></label>
               </div>
 
 
               <div class="mb-3">
                 <label>Password</label>
-                <input type="password" class="form-control" id="formGroupExampleInput1"  style="border-color: #3ECAC1;">
+                <input type="password" class="form-control" id="passLogin">
+                <label id ="password-error-login-label"></label>
               </div>
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit" style="background-color: #3ECAC1;">Login</button>
+              <button class="btn btn-primary btn-lg btn-block" id ="loginBtn" type="submit"  onclick="checkAcc()">Login</button>
+              <label id ="loginError"></label>
 
-              <hr class="my-4" style="border-color: #3ECAC1; border-style: solid;">
+              <hr class="my-4">
 
-              <button class="btn btn-lg btn-block btn-primary" style="background-color: #3ECAC1;"
-                      type="submit"><a href="singnup.html" style="color:white;text-decoration: none;">Sign Up</a></button>
+              <button class="btn btn-lg btn-block btn-primary"  id="signupBtn"
+                      type="submit"><a href="singnup.html">Sign Up</a></button>
             </div>
         </div>
       </div>
     </div>
   </section>
 </body>
+<script src="login.js"></script>
+<link rel="stylesheet" href="login.css">
 </html>

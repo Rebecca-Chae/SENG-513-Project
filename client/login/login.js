@@ -17,6 +17,7 @@ async function createAccount(usr, pass, confirmPass) {
         console.log(response)
         console.log(JSON.stringify(response.json()))
         console.log("Account created")
+        let registerSuccess = document.getElementById("register-success").innerText = "The account has been created successfully. Please try logging in."
     }
     else{
         console.log("Account did not get created")
@@ -46,10 +47,10 @@ function checkInfoFilled(usr, pass, confirmPass) {
     if(usr==""){
        let error_usr = document.getElementById("username-error").innerText = "Please enter a username."
     }
-    else if(pass==""){
+    if(pass==""){
         let error_password = document.getElementById("password-error").innerText ="Please enter a password"
     }
-    else if(confirmPass==""){
+    if(confirmPass==""){
         let error_re_enter_password = document.getElementById("password-re-enter-error").innerText ="Please enter a password"
     }
 }
@@ -71,3 +72,41 @@ function getInfo(){
 
 
 }
+
+async function getAcc(usr, pass) {
+    let loginError = document.getElementById("loginError")
+    let url = 'http://localhost:3000/users/login';
+    let body_js = {"username": usr, "password": pass}
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body_js),
+    })
+    console.log(response)
+    if (response.status === 200) {
+        console.log(response)
+        console.log(JSON.stringify(response.json()))
+    }
+    else if(response.statusText=="Not Found"){
+        loginError.innerText="This account does not exist. Please enter a valid username/password or try signing up"
+
+
+    }
+
+}
+
+function checkAcc() {
+    username = document.getElementById("usrLogin");
+    password = document.getElementById("passLogin")
+    if (username.value == "") {
+        let error_usr = document.getElementById("username-error-login-label").innerText = "Please enter a username"
+
+    }
+    if (password.value == "") {
+        let error_pass = document.getElementById("password-error-login-label").innerText = "Please enter a password"
+    }
+    getAcc(username.value, password.value);
+
+    }
