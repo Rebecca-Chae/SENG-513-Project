@@ -13,20 +13,26 @@ async function createAccount(usr, pass, confirmPass) {
     body: JSON.stringify(body_js),
     })
 
+    console.log(response)
+
     if(response.status === 200) {
         console.log(response)
         console.log(JSON.stringify(response.json()))
         console.log("Account created")
+        let registerError = document.getElementById("register-error").innerText = ""
         let registerSuccess = document.getElementById("register-success").innerText = "The account has been created successfully. Please try logging in."
     }
     else{
         console.log("Account did not get created")
         console.log(response.status)
         if(response.status === 400 && usr!="" && pass!="" && confirmPass!="" ){
+
             let registerError = document.getElementById("register-error").innerText = "The account already exists. Please try logging in instead."
+            let registerSuccess = document.getElementById("register-success").innerText = ""
         }
         else if(response.status === 500){
             let registerError = document.getElementById("register-error").innerText = "An unexpected error has occurred. Please try again later."
+            let registerSuccess = document.getElementById("register-success").innerText = ""
 
         }
     }
@@ -91,8 +97,6 @@ async function getAcc(usr, pass) {
     }
     else if(response.statusText=="Not Found"){
         loginError.innerText="This account does not exist. Please enter a valid username/password or try signing up"
-
-
     }
 
 }
@@ -107,6 +111,6 @@ function checkAcc() {
     if (password.value == "") {
         let error_pass = document.getElementById("password-error-login-label").innerText = "Please enter a password"
     }
-    getAcc(username.value, password.value);
+    getAcc(username.value, password.value)
 
     }
