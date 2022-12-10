@@ -1,10 +1,7 @@
 const router = require("express").Router();
-
 const io = require("../server").io;
 const User = require("../models/user.model");
 const List = require("../models/list.model");
-
-// TODO: refine these error status codes
 
 /*
     POST REQUESTS 
@@ -54,10 +51,7 @@ router.route("/add-user/:listID").post((req, res) => {
         }
     )
         .then(() => res.status(200).json())
-        .catch(err => res.status(500).json("Error: " + err));
-    //make list for this user
-
-    
+        .catch(err => res.status(500).json("Error: " + err));    
 });
 
 /*
@@ -83,14 +77,6 @@ router.route("/:listID").get((req, res) => {
         .catch(err => res.status(500).json("Error: " + err));
 });
 
-//Get budget of list
-
-//Get total value of list
-
-//Get all users and their permission levels
-
-//Get all items in the list
-
 /*
     DELETE REQUESTS
 */
@@ -103,5 +89,12 @@ router.route("/:listID").delete((req, res) => {
 });
 
 //Delete a user
+router.route("/delete-user/:listID").delete((req, res) => {
+    List.findOne({_id: req.params.listID},
+        { $pull: { shared: {user: req.body.user} } }
+    )
+    .then(() => res.status(200).json())
+    .catch(err => res.status(500).json("Error: " + err));
+});
 
 module.exports = router;
