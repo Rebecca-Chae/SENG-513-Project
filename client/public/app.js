@@ -85,7 +85,7 @@ exampleModal.addEventListener('show.bs.modal', (e) => {
   const modalBodyInput = exampleModal.querySelector('.modal-body input');
 
   modalTitle.textContent = `Add to List ${recipient}`;
-  //modalBodyInput.value = recipient;
+  modalBodyInput.value = recipient;
 })
 
 console.log("hello from client");
