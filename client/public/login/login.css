@@ -35,6 +35,9 @@
 a {
     color: #FFF;
 }
+a:hover{
+    color:white;
+}
 
 #loginBtn{
     background-color: #3ECAC1;

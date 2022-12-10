@@ -92,7 +92,7 @@ async function getAcc(usr, pass) {
     })
     console.log(response)
     if (response.status === 200) {
-        window.open("public/list.html")
+        window.open("login/list.html")
         console.log(response)
         console.log(JSON.stringify(response.json()))
     }
