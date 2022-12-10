@@ -27,7 +27,7 @@ const io = exports.io = socketio(server, {
 
 // set the static folder -- the folder that the server serves to the client
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
-app.use(express.static(path.join(__dirname, "../client/public")));
+app.use(express.static(path.join(__dirname, "../client/public/login")));
 
 app.use(cors());
 

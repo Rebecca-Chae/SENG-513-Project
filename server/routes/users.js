@@ -41,4 +41,16 @@ router.route("/sign-up").post((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+// user authentication for login (does there exist a user in db with given user/pass combo?)
+router.route("/login").post((req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    User.findOne({ username: username, password: password })
+        .then(user => {
+            if (user === null) res.status(401).json(user)
+            else res.status(200).json(user)
+        })
+        .catch(err => res.status(500).json("Error: " + err));
+});
+
 module.exports = router;
