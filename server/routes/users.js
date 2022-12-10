@@ -1,101 +1,43 @@
 const router = require("express").Router();
-
 const io = require("../server").io;
 const User = require("../models/user.model");
-const List = require("../models/list.model");
 
-/*
-    POST REQUESTS 
-*/
+// TODO: refine these error status codes
 
-//Create a new list given a user ID it belongs to
-router.route("/new-list").post((req, res) => {
-    User.findOne({ username: req.body.username})
-        .then(user => {
-            if(user === null){
-                res.status(400).json("Error : No user with ID ${req.body.userID} exists");
-            }else {
-                const newList = new List({
-                    listName: req.body.listName, 
-                    budget: req.body.budget, 
-                    creatorID:username
-                });
-                newList.save()
-                    .then(() => res.status(200).json)
-                    .catch(err => res.status(500).json("Error: " + err));
-            }
-        })
-        .catch(err => res.status(500).json("Error: " + err));
+// GET REQUESTS
+
+// get all users in the db
+router.route("/").get((req, res) => {
+    User.find()
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json("Error: " + err));
 });
 
-//Change list name
-router.route("/:listID").post((req, res) => {
-    List.updateOne({ _id: req.params.listID}, { $set: {listName: req.body.listName}})
-        .then(() => res.status(200).json())
-        .catch(err => res.status(500).json("Error: " + err));
+// get user with specified username
+router.route("/user/:username").get((req, res) => {
+    User.findOne({username: req.params.username})
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json("Error: " + err));
 });
 
-//Change budget of list
-router.route("/update-budget/:listID").post((req, res) => {
-    List.updateOne({ _id: req.params.listID}, { $set: {budget: req.body.budget}})
-        .then(() => res.status(200).json())
-        .catch(err => res.status(500).json("Error: " + err));
-});
+// TODO: define POST endpoint for user authentication (exists user in db with given username & password)
 
-//Change or add user with permission 
-router.route("/add-user/:listID").post((req, res) => {
-    //add user
-    List.updateOne(
-        { _id: req.params.listID}, 
-        {$set: 
-            {shared: {user: req.body.user, permission: req.body.permission} }
-        }
-    )
-        .then(() => res.status(200).json())
-        .catch(err => res.status(500).json("Error: " + err));
-});
 
-/*
-    GET REQUESTS
-*/
+// POST REQUESTS
 
-//Get all the lists of the user
-router.route("/get-user-lists/:username").get((req, res) => {
-    List.find({
-        $or: [ {"creator": username}, {"shared.user": username}]
-    })
-        .then(lists => res.status(200).json(lists))
-        .catch(err => res.status(400).json("Error: " + err))
-});
+// create new user, save to db, return newly added user
+router.route("/sign-up").post((req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const newUser = new User({
+        username: username, password: password
+    });
 
-//Get a specific list
-router.route("/:listID").get((req, res) => {
-    List.findOne({ _id: req.params.listID})
-        .then(list => {
-            if (list === null) res.status(400).json(list)
-            else res.status(200).json(user)
-        })
-        .catch(err => res.status(500).json("Error: " + err));
-});
-
-/*
-    DELETE REQUESTS
-*/
-
-//Delete list
-router.route("/:listID").delete((req, res) => {
-    List.remove({ _id: req.params.listID})
-        .then(() => res.status(200).json())
-        .catch(err => res.status(500).json("Error: " + err));
-});
-
-//Delete a user
-router.route("/delete-user/:listID").delete((req, res) => {
-    List.findOne({_id: req.params.listID},
-        { $pull: { shared: {user: req.body.user} } }
-    )
-    .then(() => res.status(200).json())
-    .catch(err => res.status(500).json("Error: " + err));
+    // save the user to the db
+    newUser.save()
+        // see if .then(result => res.status(200).json(result))
+        .then(() => res.status(200).json({ userInfo: newUser }))
+        .catch(err => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
