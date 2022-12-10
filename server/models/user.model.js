@@ -6,14 +6,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true,
-        minlength: 3
+        trim: true
     },
     password: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 3
+        trim: true
     }
 }, {
     timestamps: true
