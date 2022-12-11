@@ -6,7 +6,7 @@ const List = require("../models/list.model");
 
 // Get all items in the list, method: POST
 router.route("/get-items").get((req, res) => {
-    List.findOne({ _id: req.body.listID })
+    Item.find({ listID: req.body.listID })
         .then(items => res.json(items))
         .catch(err => res.status(500).json("Error: " + err));
 });
