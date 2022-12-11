@@ -92,7 +92,7 @@ addListButton.addEventListener('click', function () {
                 "</form>" +
                 "</div>" +
                 "<div class='modal-footer'>" +
-                "<button type='button' class='btn-modal-card'>Add</button>" +
+                "<button type='button' class='btn btn-secondary'>Add</button>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
