@@ -92,6 +92,7 @@ async function getAcc(usr, pass) {
     })
     console.log(response)
     if (response.status === 200) {
+        localStorage.setItem("username", usr);
         window.location.href = 'list.html';
         console.log(response)
         console.log(JSON.stringify(response.json()))

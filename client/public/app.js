@@ -72,3 +72,35 @@ addListButton.addEventListener('click', function () {
 });
 
 console.log("hello from client");
+
+const username = localStorage.getItem("username");
+console.log(`username: ${username}`);
+
+let lists = [];
+
+const getLists = async (username) => {
+    let url = `http://localhost:3000/lists/get-user-lists/${username}`;
+    let response = await fetch(url, {
+        method: 'GET'
+    });
+    if (response.ok) {
+        lists = await response.json();
+        console.log(`lists: ${JSON.stringify(lists)}`);
+    }
+    else {
+        console.log("Failed to fetch lists");
+    }
+}
+getLists(username).then(() => {
+    console.log(`my lists: ${JSON.stringify(lists)}`);
+    const listInfos = document.getElementById('list-infos');
+
+    lists.forEach(list => {
+        const listInfo = document.createElement("list-info");
+        listInfo.setAttribute("name", list.name);
+        listInfo.setAttribute("budget", list.budget);
+        listInfo.setAttribute("total", list.total);
+        listInfo.setAttribute("creator", list.creator);
+        listInfos.appendChild(listInfo);
+    });
+});
