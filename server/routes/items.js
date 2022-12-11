@@ -5,8 +5,8 @@ const Item = require("../models/item.model");
 const List = require("../models/list.model");
 
 // Get all items in the list, method: POST
-router.route("/get-items").get((req, res) => {
-    Item.find({ listID: req.body.listID })
+router.route("/get-items/:listID").get((req, res) => {
+    Item.find({ listID: req.params.listID })
         .then(items => res.json(items))
         .catch(err => res.status(500).json("Error: " + err));
 });
