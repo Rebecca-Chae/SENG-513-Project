@@ -12,7 +12,7 @@ router.route("/new-list").post((req, res) => {
     User.findOne({ username: req.body.username})
         .then(user => {
             if(user === null){
-                res.status(400).json("Error : No user with ID ${req.body.userID} exists");
+                res.status(400).json(`Error : No user with ID ${req.body.userID} exists`);
             }else {
                 const newList = new List({
                     listName: req.body.listName, 
