@@ -92,5 +92,15 @@ const getLists = async (username) => {
     }
 }
 getLists(username).then(() => {
-    console.log(`my lists: ${JSON.stringify(lists)}`)
+    console.log(`my lists: ${JSON.stringify(lists)}`);
+    const listInfos = document.getElementById('list-infos');
+
+    lists.forEach(list => {
+        const listInfo = document.createElement("list-info");
+        listInfo.setAttribute("name", list.name);
+        listInfo.setAttribute("budget", list.budget);
+        listInfo.setAttribute("total", list.total);
+        listInfo.setAttribute("creator", list.creator);
+        listInfos.appendChild(listInfo);
+    });
 });
