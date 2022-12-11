@@ -45,6 +45,9 @@ connection.once("open", () => {
 // add users route
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
+// add list route
+const listRouter = require("./routes/list");
+app.use("/list", listRouter);
 // add items route
 const itemsRouter = require("./routes/items");
 app.use("/items", itemsRouter);
