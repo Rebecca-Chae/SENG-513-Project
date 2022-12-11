@@ -36,7 +36,7 @@ router.route("/update-name/:listID").post((req, res) => {
 
 //Change budget of list
 router.route("/update-budget/:listID").post((req, res) => {
-    List.updateOne({ _id: req.params.itemID}, { $set: {budget: req.body.budget}})
+    List.updateOne({ _id: req.params.listID}, { $set: {budget: req.body.budget}})
         .then(() => res.status(200).json("New budget: " + req.body.budget))
         .catch(err => res.status(500).json("Error: " + err));
 });
