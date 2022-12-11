@@ -72,3 +72,29 @@ addListButton.addEventListener('click', function () {
 });
 
 console.log("hello from client");
+
+const username = localStorage.getItem("username");
+console.log(`username: ${username}`);
+
+getLists = async (username) => {
+    let url = 'http://localhost:3000/users/login';
+    let body_js = {"username": usr, "password": pass}
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body_js),
+    })
+    console.log(response)
+    if (response.status === 200) {
+        localStorage.setItem("username", usr);
+        window.location.href = 'list.html';
+        console.log(response)
+        console.log(JSON.stringify(response.json()))
+    }
+    else if(response.statusText==="Not Found"){
+        loginError.innerText="This account does not exist. Please enter a valid username/password or try signing up"
+    }
+
+}
