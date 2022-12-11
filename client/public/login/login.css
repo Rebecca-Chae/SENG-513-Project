@@ -1,0 +1,55 @@
+.bg-image-vertical {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 100%;
+}
+
+@media (min-width: 1025px) {
+    .h-custom-2 {
+        height: 100%;
+    }
+}
+
+#usrLogin{
+    border-color: #3ECAC1;
+
+}
+
+#passLogin{
+    border-color: #3ECAC1;
+}
+
+.my-4{
+    color: #3ECAC1;
+    border-color: #3ECAC1;
+    border-style: solid;
+}
+
+#signupBtn{
+    background-color: #3ECAC1;
+    color: white;
+    text-decoration: none;
+}
+a {
+    color: #FFF;
+}
+a:hover{
+    color:white;
+}
+
+#loginBtn{
+    background-color: #3ECAC1;
+}
+
+#username-error-login-label{
+    color: red;
+}
+
+#password-error-login-label{
+    color: red;
+}
+#loginError{
+    color:red;
+}
