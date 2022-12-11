@@ -59,14 +59,11 @@ router.route("/update-users/:listID").post((req, res) => {
 */
 
 //Get all the lists of the user
-/*
-    NEED TO: Print the values found by query to double check
-*/
 router.route("/get-user-lists/:username").get((req, res) => {
     List.find({
         $or: [ {"creator": req.params.username}, {"shared.user": req.params.username}]
     })
-        .then(() => res.status(200).json())
+        .then(lists => res.status(200).json(lists))
         .catch(err => res.status(400).json("Error: " + err))
 });
 
