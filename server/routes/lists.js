@@ -12,12 +12,14 @@ router.route("/new-list").post((req, res) => {
     User.findOne({ username: req.body.username})
         .then(user => {
             if(user === null){
-                res.status(400).json("Error : No user with ID ${req.body.userID} exists");
+                res.status(400).json(`Error : No user with ID ${req.body.username} exists`);
             }else {
                 const newList = new List({
-                    listName: req.body.listName, 
-                    budget: req.body.budget, 
-                    creator: req.body.username
+                    name: req.body.listName,
+                    budget: req.body.budget || 0,
+                    total: req.body.total || 0,
+                    creator: req.body.username,
+                    shared: req.body.shared || []
                 });
                 newList.save()
                     .then(() => res.status(200).json({listInfo: newList}))
