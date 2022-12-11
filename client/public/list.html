@@ -1,34 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Go Groceries</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="app.js" charset="utf-8"></script>
-    </head>
-    <body>
-        <nav>
-            <div id="logo"><img src="images/logo.png" alt="Go Grocery text in cursive"></div>
-        </nav>
-        <section>
-            <h3 id="list-title">G9's Grocery List</h3>
-            <div id="flex-container">
-                <p>
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Baked Salmon
-                    </button>
-                </p>
-                <div style="min-height: 120px;">
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body" style="width: 700px;">
-                            This is some placeholder content for a vertical collapse. It's hidden by default and shown when triggered.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="style.css">
-    </body>
-</html>
+// client-side JS code
+const socket = io();
+
+let addListButton = document.getElementById('add-list-button');
+addListButton.addEventListener('click', function () {
+
+    const allInnerCards = document.querySelectorAll('.inner-card');
+
+    // Checks each inner card based on if it's collapsed or not. If it's collapsed, hide the div. Otherwise, show the div
+    allInnerCards.forEach(card => {
+        card.addEventListener('hide.bs.collapse', function () {
+            card.setAttribute("hidden", "");
+        });
+        card.addEventListener('show.bs.collapse', function () {
+            card.removeAttribute("hidden");
+        });
+    })
+
+    // Gets all list buttons created
+    let buttonsCreated = document.getElementsByClassName("btn btn-primary");
+    let lengthOfButtons = buttonsCreated.length;
+    let lastButtonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
+    lastButtonCreated.style.marginBottom = "10px";
+
+    // Gets all card components created
+    let cardsCreated = document.getElementsByClassName("card card-body");
+    let lengthOfCards = cardsCreated.length;
+    let lastCardCreated = document.getElementsByClassName("card card-body")[lengthOfCards-1];
+
+    let lastInnerCardCreated = document.getElementsByClassName('inner-card')[lengthOfCards-1]
+    lastCardCreated.style.marginBottom = "10px";
+
+    // Get the id count after "-" . Ex: #lst-0. Only want to get the 0 (int)
+    let buttonId = parseInt(lastButtonCreated.getAttribute("data-bs-target").split("-")[1]);
+    console.log("The button Id: " + buttonId);
+
+    // Position this newly created list button after the last created list button (sibling)
+    lastButtonCreated.insertAdjacentHTML("afterend",
+            "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
+                "aria-expanded='false' contenteditable='true'> myList" +
+            "</button>"
+    );
+
+    // We have added one more button
+    lengthOfButtons++;
+    let buttonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
+    buttonId++;
+    console.log(buttonId);
+    // Here changing data-bs-target value to increase by 1.
+    buttonCreated.setAttribute("data-bs-target", "#lst-" + buttonId.toString())
+    buttonCreated.setAttribute("aria-controls", "lst-" + buttonId.toString())
+    buttonCreated.innerText = "myList " + buttonId;
+
+    // Position this newly created card after the last card created
+    lastInnerCardCreated.insertAdjacentHTML("afterend",
+    "<div class='inner-card' style='min-height: 120px;'> " +
+            "<div class='collapse show'> " +
+                "<div class='card card-body' style='width: 700px;'>" +
+                "</div> " +
+            "</div> " +
+        "</div>"
+    );
+
+    // We have added one more card
+    lengthOfCards++;
+    let cardCreated = document.getElementsByClassName("collapse")[lengthOfCards-1];
+    let cardValue = document.getElementsByClassName("card card-body")[lengthOfCards-1];
+
+    // Idea is for each button to have its own collapse element. Do that by linking data-bs-target with id
+    cardCreated.setAttribute("id", "lst-" + buttonId.toString())
+    cardValue.innerText = "placeholder: " + buttonId;
+});
+
+console.log("hello from client");
