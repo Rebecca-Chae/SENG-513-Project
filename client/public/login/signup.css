@@ -1,0 +1,36 @@
+
+#logo {
+    background: #3ECAC1;
+    padding: 20px;
+    border: 2px solid #3ECAC1;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.10);
+}
+
+
+.form-control form-control-lg{
+    border-color: #3ECAC1;
+    border-style: initial;
+}
+
+#password-error{
+    color: red;
+}
+
+#password-re-enter-error{
+    color: red;
+}
+
+#username-error{
+    color: red;
+
+}
+
+#register-error{
+    color: red;
+    justify-content: center;
+}
+
+#register-success{
+    color:mediumseagreen;
+    justify-content: center;
+}
