@@ -48,7 +48,6 @@ app.use("/users", usersRouter);
 // add items route
 const itemsRouter = require("./routes/items");
 app.use("/items", itemsRouter);
-
 // add list route
 const listsRouter = require("./routes/lists");
 app.use("/lists", listsRouter);
