@@ -61,4 +61,8 @@ server.listen(PORT, () => {
 // note: `socket` param is the client that has connected
 io.on("connection", (socket) => {
     console.log("New web socket connection");
+    socket.on("join-list", (listId) => {
+        socket.join(listId);
+        console.log(`Added socket ${socket.id} to list ${listId}.`);
+    });
 });
