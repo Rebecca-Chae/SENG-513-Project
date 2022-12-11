@@ -66,7 +66,7 @@ addListButton.addEventListener('click', function () {
                 "<h5 id='notes-label'>Notes</h5>" +
                 "</div>" +
                 "<ul class = 'list'>" +
-                "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" + 
+                "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
                 "</ul>" +
                 "<hr class='new1'>" +
                 "<button type='button' class='btn-modal-card' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
@@ -97,7 +97,7 @@ addListButton.addEventListener('click', function () {
                 "</div>" +
                 "</div>" +
                 "</div>" +
-                "</a>" +       
+                "</a>" +
                 "</div>" +
                 "</div> " +
                 "</div> " +
@@ -107,11 +107,9 @@ addListButton.addEventListener('click', function () {
     // We have added one more card
     lengthOfCards++;
     let cardCreated = document.getElementsByClassName("collapse")[lengthOfCards-1];
-    let cardValue = document.getElementsByClassName("card card-body")[lengthOfCards-1];
 
     // Idea is for each button to have its own collapse element. Do that by linking data-bs-target with id
     cardCreated.setAttribute("id", "lst-" + buttonId.toString())
-    cardValue.innerText = "placeholder: " + buttonId;
 });
 
 const exampleModal = document.getElementById('exampleModal');
