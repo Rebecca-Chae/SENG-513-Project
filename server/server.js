@@ -30,8 +30,6 @@ const io = exports.io = socketio(server, {
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
 app.use(express.static(path.join(__dirname, "../client/public")));
 
-app.use(cors());
-
 // configure the app to parse incoming JSON requests & put the parsed data in req.body
 app.use(express.json());
 // configure app to use cors middleware
