@@ -55,9 +55,9 @@ addListButton.addEventListener('click', function () {
     lastInnerCardCreated.insertAdjacentHTML("afterend",
     "<div class='inner-card' style='min-height: 120px;'> " +
             "<div class='collapse show'> " +
-                "<div class='card card-body' style='width: 700px;'>" +
+                "<div class='card card-body' style='width: 650px;'>" +
                 "<div style='min-height: 120px;'>"+
-                "<div class='modal-card-body' style='width: 700px;'>" +
+                "<div class='modal-card-body' style='width: 650px;'>" +
                 "<h3>Default List</h3>" +
                 "<h5 id='budget-label'>Budget $</h5>" +
                 "<hr class='new1'>" +
