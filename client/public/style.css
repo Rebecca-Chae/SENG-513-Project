@@ -92,7 +92,7 @@ section {
     height: 400px;
     background-color: #3ECAC1;
     color: white;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 
@@ -133,7 +133,7 @@ hr{
 
 #budget-label{
     float:left;
-    margin-left: 540px;
+    margin-left: 450px;
 }
 #btn-outline-add-item{
     color: black;

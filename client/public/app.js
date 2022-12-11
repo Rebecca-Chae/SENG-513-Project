@@ -68,13 +68,13 @@ addListButton.addEventListener('click', function () {
                 "<ul class = 'list'>" +
                 "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
                 "</ul>" +
-                "<hr class='new1'>" +
-                "<button type='button' class='btn-modal-card' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+                "<hr />" +
+                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
                 "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
                 "<div class='modal-dialog'>" +
                 "<div class='modal-content'>" +
                 "<div class='modal-header'>" +
-                "<h5 class='modal-title' id='exampleModalLabel'>Add Item</h5>" +
+                "<h3>Add Item to List</h3>" +
                 "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
                 "</div>" +
                 "<div class='modal-body'>" +
@@ -92,7 +92,6 @@ addListButton.addEventListener('click', function () {
                 "</form>" +
                 "</div>" +
                 "<div class='modal-footer'>" +
-                "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>" +
                 "<button type='button' class='btn-modal-card'>Add</button>" +
                 "</div>" +
                 "</div>" +
