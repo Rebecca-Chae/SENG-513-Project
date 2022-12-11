@@ -52,6 +52,10 @@ app.use("/list", listRouter);
 const itemsRouter = require("./routes/items");
 app.use("/items", itemsRouter);
 
+// add list route
+const listRouter = require("./routes/lists");
+app.use("/lists", listsRouter);
+
 // start the server
 server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
