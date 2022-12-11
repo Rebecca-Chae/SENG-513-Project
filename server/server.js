@@ -46,18 +46,11 @@ connection.once("open", () => {
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 // add list route
-const listRouter = require("./routes/list");
-app.use("/list", listRouter);
+const listRouter = require("./routes/lists");
+app.use("/lists", listRouter);
 // add items route
 const itemsRouter = require("./routes/items");
 app.use("/items", itemsRouter);
-// add list route
-const listsRouter = require("./routes/lists");
-app.use("/lists", listsRouter);
-
-// add list route
-const listRouter = require("./routes/lists");
-app.use("/lists", listsRouter);
 
 // start the server
 server.listen(PORT, () => {
