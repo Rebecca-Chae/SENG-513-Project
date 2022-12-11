@@ -8,7 +8,7 @@ const socketio = require("socket.io");
 
 // ideally this uri would be put in a .env file, along with the PORT var (more secure if they aren't visible and pushed
 // to our repo), but this works for now
-const MONGODB_URI = "mongodb+srv://db-user:db-pass@cluster0.ofuaylx.mongodb.net/?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb+srv://db-user:db-pass@cluster0.ofuaylx.mongodb.net/go_groceries?retryWrites=true&w=majority";
 
 // in development: the port will always be 3000.
 // in production: if we host the app on some service (e.g., AWS), the host may independently
@@ -21,9 +21,10 @@ const app = express();
 const server = http.createServer(app);
 // pass the server into socket.io, export the socket.io server to other modules
 const io = exports.io = socketio(server, {
-    cors:{origin:'*'}
+    cors: {
+        origin: "*"
+    }
 });
-
 
 // set the static folder -- the folder that the server serves to the client
 // we are setting it to the `public` folder since this contains all the client-side code we want to serve to the client.
@@ -33,7 +34,8 @@ app.use(cors());
 
 // configure the app to parse incoming JSON requests & put the parsed data in req.body
 app.use(express.json());
-
+// configure app to use cors middleware
+app.use(cors());
 // open a connection to our mongodb cluster
 mongoose.connect(MONGODB_URI);
 
@@ -45,6 +47,9 @@ connection.once("open", () => {
 // add users route
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
+// add items route
+const itemsRouter = require("./routes/items");
+app.use("/items", itemsRouter);
 
 // start the server
 server.listen(PORT, () => {
