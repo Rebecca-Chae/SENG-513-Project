@@ -1,6 +1,13 @@
 // client-side JS code
 const socket = io();
 
+function createItem(){
+    let itemText = document.getElementById('item-text');
+    console.log(itemText.value)
+
+}
+
+
 let addListButton = document.getElementById('add-list-button');
 addListButton.addEventListener('click', function () {
 
@@ -57,7 +64,7 @@ addListButton.addEventListener('click', function () {
             "<div class='collapse show'> " +
                 "<div class='card card-body' style='width: 650px;'>" +
                 "<div style='min-height: 120px;'>"+
-                "<div class='modal-card-body' style='width: 650px;'>" +
+                // "<div class='modal-card-body' style='width: 650px;'>" +
                 "<h3>Default List</h3>" +
                 "<h5 id='budget-label'>Budget $</h5>" +
                 "<hr class='new1'>" +
@@ -67,40 +74,46 @@ addListButton.addEventListener('click', function () {
                 "</div>" +
                 "<ul class = 'list'>" +
                 "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
+                "<label>Name</label>"+
+                "<input type='text' id = 'item-text' name='item'>" +
+                "<label id='notes-label'>Category</label>"+
+                "<input type='text' id = 'category-text' name='category'>"+
+                "<label>Notes</label>"+
+                "<input type='text' id = 'notes-text' name='notes'>"+
                 "</ul>" +
                 "<hr />" +
-                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
-                "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
-                "<div class='modal-dialog'>" +
-                "<div class='modal-content'>" +
-                "<div class='modal-header'>" +
-                "<h3>Add Item to List</h3>" +
-                "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
-                "</div>" +
-                "<div class='modal-body'>" +
-                "<form>" +
-                "<div class='mb-3'>" +
-                "<label for='recipient-name' class='col-form-label'>Category:</label>" +
-                "<input type='text' class='form-control'>" +
-                "<label for='recipient-name' class='col-form-label'>Item:</label>" +
-                "<input type='text' class='form-control'>" +
-                "<label for='message-text' class='col-form-label'>Notes:</label>" +
-                "<textarea class='form-control' id='message-text'></textarea>" +
-                "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
-                "<input type='text' class='form-control'>" +
-                "</div>" +
-                "</form>" +
-                "</div>" +
-                "<div class='modal-footer'>" +
-                "<button type='button' class='btn btn-secondary'>Add</button>" +
-                "</div>" +
-                "</div>" +
-                "</div>" +
+                // "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item' onclick='createItem()'>Add Item</button>" +
+                // "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
+                // "<div class='modal-dialog'>" +
+                // "<div class='modal-content'>" +
+                // "<div class='modal-header'>" +
+                // "<h3>Add Item to List</h3>" +
+                // "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
+                // "</div>" +
+                // "<div class='modal-body'>" +
+                // "<form>" +
+                // "<div class='mb-3'>" +
+                // "<label for='recipient-name' class='col-form-label'>Category:</label>" +
+                // "<input type='text' class='form-control'>" +
+                // "<label for='recipient-name' class='col-form-label'>Item:</label>" +
+                // "<input type='text' class='form-control'>" +
+                // "<label for='message-text' class='col-form-label'>Notes:</label>" +
+                // "<textarea class='form-control' id='message-text'></textarea>" +
+                // "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
+                // "<input type='text' class='form-control'>" +
+                // "</div>" +
+                // "</form>" +
+                // "</div>" +
+                // "<div class='modal-footer'>" +
+                // "<button type='button' class='btn btn-secondary'>Add</button>" +
+                // "</div>" +
+                // "</div>" +
+                // "</div>" +
                 "</a>" +
                 "</div>" +
                 "</div> " +
                 "</div> " +
-                "</div>"                
+                "</div>"
     );
 
     // We have added one more card
@@ -111,22 +124,22 @@ addListButton.addEventListener('click', function () {
     cardCreated.setAttribute("id", "lst-" + buttonId.toString())
 });
 
-const exampleModal = document.getElementById('exampleModal');
-exampleModal.addEventListener('show.bs.modal', (e) => {
-  // Button that triggered the modal
-  const buttonforadditem = e.relatedTarget;
-  // Extract info from data-mdb-* attributes
-  const recipient = buttonforadditem.getAttribute('data-bs-whatever');
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  const modalTitle = exampleModal.querySelector('.modal-title');
-  const modalBodyInput = exampleModal.querySelector('.modal-body input');
-
-  modalTitle.textContent = `Add to List ${recipient}`;
-  modalBodyInput.value = recipient;
-})
+// const exampleModal = document.getElementById('exampleModal');
+// exampleModal.addEventListener('show.bs.modal', (e) => {
+//   // Button that triggered the modal
+//   const buttonforadditem = e.relatedTarget;
+//   // Extract info from data-mdb-* attributes
+//   const recipient = buttonforadditem.getAttribute('data-bs-whatever');
+//   // If necessary, you could initiate an AJAX request here
+//   // and then do the updating in a callback.
+//   //
+//   // Update the modal's content.
+//   const modalTitle = exampleModal.querySelector('.modal-title');
+//   const modalBodyInput = exampleModal.querySelector('.modal-body input');
+//
+//   modalTitle.textContent = `Add to List ${recipient}`;
+//   modalBodyInput.value = recipient;
+// })
 
 console.log("hello from client");
 
