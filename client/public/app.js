@@ -1,8 +1,17 @@
 // client-side JS code
 const socket = io();
+const username = localStorage.getItem("username");
 
 let addListButton = document.getElementById('add-list-button');
 addListButton.addEventListener('click', function () {
+    createList(username, "List").then(listInfo => {
+        console.log(listInfo);
+        addList(listInfo);
+    });
+});
+
+function addList(listInfo) {
+    console.log(listInfo.name);
 
     const allInnerCards = document.querySelectorAll('.inner-card');
 
@@ -30,76 +39,70 @@ addListButton.addEventListener('click', function () {
     let lastInnerCardCreated = document.getElementsByClassName('inner-card')[lengthOfCards-1]
     lastCardCreated.style.marginBottom = "10px";
 
-    // Get the id count after "-" . Ex: #lst-0. Only want to get the 0 (int)
-    let buttonId = parseInt(lastButtonCreated.getAttribute("data-bs-target").split("-")[1]);
-    console.log("The button Id: " + buttonId);
-
     // Position this newly created list button after the last created list button (sibling)
     lastButtonCreated.insertAdjacentHTML("afterend",
-            "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
-                "aria-expanded='false' contenteditable='true'> myList" +
-            "</button>"
+        "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
+        "aria-expanded='false' contenteditable='true'> myList" +
+        "</button>"
     );
 
     // We have added one more button
     lengthOfButtons++;
     let buttonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
-    buttonId++;
-    console.log(buttonId);
     // Here changing data-bs-target value to increase by 1.
-    buttonCreated.setAttribute("data-bs-target", "#lst-" + buttonId.toString())
-    buttonCreated.setAttribute("aria-controls", "lst-" + buttonId.toString())
-    buttonCreated.innerText = "myList " + buttonId;
+    buttonCreated.setAttribute("data-bs-target", "#lst-" + listInfo._id)
+    buttonCreated.setAttribute("aria-controls", "lst-" +  listInfo._id)
+    buttonCreated.innerText = "myList " + listInfo._id;
 
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
-    "<div class='inner-card' style='min-height: 120px;'> " +
-            "<div class='collapse show'> " +
-                "<div class='card card-body' style='width: 650px;'>" +
-                "<div style='min-height: 120px;'>"+
-                "<div class='modal-card-body' style='width: 650px;'>" +
-                "<h3>Default List</h3>" +
-                "<h5 id='budget-label'>Budget $</h5>" +
-                "<hr class='new1'>" +
-                "<div style='clear: both'>" +
-                "<h5 style='float:left'> <u>Produce</u></h5>" +
-                "<h5 id='notes-label'>Notes</h5>" +
-                "</div>" +
-                "<ul class = 'list'>" +
-                "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
-                "</ul>" +
-                "<hr />" +
-                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
-                "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
-                "<div class='modal-dialog'>" +
-                "<div class='modal-content'>" +
-                "<div class='modal-header'>" +
-                "<h3>Add Item to List</h3>" +
-                "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
-                "</div>" +
-                "<div class='modal-body'>" +
-                "<form>" +
-                "<div class='mb-3'>" +
-                "<label for='recipient-name' class='col-form-label'>Category:</label>" +
-                "<input type='text' class='form-control'>" +
-                "<label for='recipient-name' class='col-form-label'>Item:</label>" +
-                "<input type='text' class='form-control'>" +
-                "<label for='message-text' class='col-form-label'>Notes:</label>" +
-                "<textarea class='form-control' id='message-text'></textarea>" +
-                "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
-                "<input type='text' class='form-control'>" +
-                "</div>" +
-                "</form>" +
-                "</div>" +
-                "<div class='modal-footer'>" +
-                "<button type='button' class='btn-modal-card'>Add</button>" +
-                "</div>" +
-                "</div>" +
-                "</div>" +
-                "</a>" +
-                "</div>" +
-                "</div> " +
-            "</div> " +
+        "<div class='inner-card' style='min-height: 120px;'> " +
+        "<div class='collapse show'> " +
+        "<div class='card card-body' style='width: 650px;'>" +
+        "<div style='min-height: 120px;'>"+
+        "<div class='modal-card-body' style='width: 650px;'>" +
+        "<h3>Default List</h3>" +
+        "<h5 id='budget-label'>Budget $</h5>" +
+        "<hr class='new1'>" +
+        "<div style='clear: both'>" +
+        "<h5 style='float:left'> <u>Produce</u></h5>" +
+        "<h5 id='notes-label'>Notes</h5>" +
+        "</div>" +
+        "<ul class = 'list'>" +
+        "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
+        "</ul>" +
+        "<hr />" +
+        "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+        "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
+        "<div class='modal-dialog'>" +
+        "<div class='modal-content'>" +
+        "<div class='modal-header'>" +
+        "<h3>Add Item to List</h3>" +
+        "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
+        "</div>" +
+        "<div class='modal-body'>" +
+        "<form>" +
+        "<div class='mb-3'>" +
+        "<label for='recipient-name' class='col-form-label'>Category:</label>" +
+        "<input type='text' class='form-control'>" +
+        "<label for='recipient-name' class='col-form-label'>Item:</label>" +
+        "<input type='text' class='form-control'>" +
+        "<label for='message-text' class='col-form-label'>Notes:</label>" +
+        "<textarea class='form-control' id='message-text'></textarea>" +
+        "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
+        "<input type='text' class='form-control'>" +
+        "</div>" +
+        "</form>" +
+        "</div>" +
+        "<div class='modal-footer'>" +
+        "<button type='button' class='btn-modal-card'>Add</button>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</a>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
         "</div>"
     );
 
@@ -108,8 +111,8 @@ addListButton.addEventListener('click', function () {
     let cardCreated = document.getElementsByClassName("collapse")[lengthOfCards-1];
 
     // Idea is for each button to have its own collapse element. Do that by linking data-bs-target with id
-    cardCreated.setAttribute("id", "lst-" + buttonId.toString())
-});
+    cardCreated.setAttribute("id", "lst-" + listInfo._id)
+}
 
 const exampleModal = document.getElementById('exampleModal');
 exampleModal.addEventListener('show.bs.modal', (e) => {
@@ -130,7 +133,6 @@ exampleModal.addEventListener('show.bs.modal', (e) => {
 
 console.log("hello from client");
 
-const username = localStorage.getItem("username");
 console.log(`username: ${username}`);
 
 let lists = [];
@@ -167,7 +169,6 @@ const getListItems = async (listId) => {
 
 getLists(username).then(async () => {
     console.log(`my lists before: ${JSON.stringify(lists)}`);
-    const listInfos = document.getElementById('list-infos');
 
     let listsProcessed = 0;
     await lists.forEach(list => {
@@ -175,17 +176,36 @@ getLists(username).then(async () => {
         getListItems(list._id).then(listItems => {
             list["items"] = listItems;
 
-            const listInfo = document.createElement("list-info");
-            listInfo.setAttribute("name", list.name);
-            listInfo.setAttribute("budget", list.budget);
-            listInfo.setAttribute("total", list.total);
-            listInfo.setAttribute("creator", list.creator);
-            listInfos.appendChild(listInfo);
-
             listsProcessed++;
             if (listsProcessed === lists.length) {
                 console.log(`my lists with items: ${JSON.stringify(lists)}`);
             }
         });
+        addList(list);
     });
 });
+
+const createList = async (username, listName) => {
+    let url = `http://localhost:3000/lists/new-list`;
+    console.log("it;s me: " + username)
+    let body = {
+        "username": username,
+        "listName": listName
+    }
+    console.log("body: " + JSON.stringify(body));
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let newList = await response.json();
+        console.log(`New list: ${JSON.stringify(newList)}`);
+        return newList.listInfo;
+    }
+    else {
+        console.log("Failed to create new list");
+    }
+}
