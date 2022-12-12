@@ -29,8 +29,8 @@ section {
     display: flex;
     column-gap: 200px;
     height: 400px;
+   
 }
-
 /* Contains only the list name button */
 #lists-container {
     /* This overflow adds a scroll bar to this div */
@@ -147,4 +147,9 @@ hr{
     /* left: 100px; */
     /* top: 650px; */
     
+}
+
+#smaller-items-section{
+    display: flex;
+
 }
