@@ -29,8 +29,14 @@ section {
     display: flex;
     column-gap: 200px;
     height: 400px;
-}
+   
+    @media screen and (min-device-width: 480px) {
+    column-gap:none;
+        flex-wrap: wrap;
+        height: 250px;
 
+}
+}
 /* Contains only the list name button */
 #lists-container {
     /* This overflow adds a scroll bar to this div */
@@ -147,4 +153,8 @@ hr{
     /* left: 100px; */
     /* top: 650px; */
     
+}
+
+#addlist-container{
+
 }
