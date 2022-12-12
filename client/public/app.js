@@ -148,16 +148,44 @@ const getLists = async (username) => {
         console.log("Failed to fetch lists");
     }
 }
-getLists(username).then(() => {
-    console.log(`my lists: ${JSON.stringify(lists)}`);
+
+const getListItems = async (listId) => {
+    let url = `http://localhost:3000/items/get-items/${listId}`;
+    let response = await fetch(url, {
+        method: 'GET',
+    });
+    if (response.ok) {
+        let items = await response.json();
+        console.log(`items for list ${listId}: ${JSON.stringify(items)}`)
+        return items;
+    }
+    else {
+        console.log(`Failed to fetch list items for list ${listId}`);
+        return [];
+    }
+};
+
+getLists(username).then(async () => {
+    console.log(`my lists before: ${JSON.stringify(lists)}`);
     const listInfos = document.getElementById('list-infos');
 
-    lists.forEach(list => {
-        const listInfo = document.createElement("list-info");
-        listInfo.setAttribute("name", list.name);
-        listInfo.setAttribute("budget", list.budget);
-        listInfo.setAttribute("total", list.total);
-        listInfo.setAttribute("creator", list.creator);
-        listInfos.appendChild(listInfo);
+    let listsProcessed = 0;
+    await lists.forEach(list => {
+        console.log(list._id);
+        getListItems(list._id).then(listItems => {
+            list["items"] = listItems;
+
+            const listInfo = document.createElement("list-info");
+            listInfo.setAttribute("name", list.name);
+            listInfo.setAttribute("budget", list.budget);
+            listInfo.setAttribute("total", list.total);
+            listInfo.setAttribute("creator", list.creator);
+            listInfos.appendChild(listInfo);
+
+            listsProcessed++;
+            if (listsProcessed === lists.length) {
+                console.log(`my lists with items: ${JSON.stringify(lists)}`);
+            }
+        });
     });
 });
