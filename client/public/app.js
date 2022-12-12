@@ -10,14 +10,32 @@ addListButton.addEventListener('click', function () {
     });
 });
 
-function addItemToList(listId) {
-    console.log(`${listId}`)
-    let category = document.getElementById('category-text-' + listId).value;
-    console.log(category)
-    let notes = document.getElementById('notes-text-' + listId).value;
-    console.log(notes);
-    let item = document.getElementById('item-text' + listId).value;
-    console.log(item);
+function addItemToList() {
+    console.log("trigerrred");
+    // console.log(`${listId}`)
+
+    let categoryInput = document.getElementById('category-text').value;
+    console.log("** " + categoryInput);
+    let notesInput = document.getElementById('notes-text').value;
+    let costInput = document.getElementById('cost-text').value;
+    let itemInput = document.getElementById('item-text').value;
+
+    let category = document.getElementById('category');
+    let notes = document.getElementById('notes');
+    let cost = document.getElementById('cost');
+    let item = document.getElementById('item-name');
+
+    category.innerText = categoryInput;
+    notes.innerText = notesInput;
+    cost.innerText = costInput;
+    item.innerText = itemInput;
+
+    // let category = document.getElementById('category-text-' + listId).value;
+    // console.log(category)
+    // let notes = document.getElementById('notes-text-' + listId).value;
+    // console.log(notes);
+    // let item = document.getElementById('item-text' + listId).value;
+    // console.log(item);
 
 }
 
@@ -63,9 +81,9 @@ function addList(listInfo) {
     // Here changing data-bs-target value to increase by 1.
     buttonCreated.setAttribute("data-bs-target", "#lst-" + listInfo._id)
     buttonCreated.setAttribute("aria-controls", "lst-" +  listInfo._id)
-    buttonCreated.innerText = "myList " + listInfo._id;
+    buttonCreated.innerText = listInfo.name;
 
-    const addItemToListId = addItemToList.bind(`${listInfo._id}`);
+    // const addItemToListId = addItemToList.bind(`${listInfo._id}`);
 
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
@@ -90,13 +108,14 @@ function addList(listInfo) {
             "</div>" +
             "</div>" +
             "<hr class='new1'>" +
-            "<h3>Default List</h3>" +
+            // "<h3>Default List</h3>" +
             "<div id='items-container'></div>" +
-            "<h5 id='budget-label'>Budget $</h5>" +
-            "<div style='clear: both'>" +
-            "<h5 style='float:left'> <u>Produce</u></h5>" +
-            "<h5 id='notes-label'>Notes</h5>" +
-            "</div>" +
+            "<div id='list-name-container'></div>" +
+            // "<h5 id='budget-label'>Budget $</h5>" +
+            // "<div style='clear: both'>" +
+            // "<h5 style='float:left'> <u>Produce</u></h5>" +
+            // "<h5 id='notes-label'>Notes</h5>" +
+            // "</div>" +
             "</div>" +
             "</div> " +
             "</div> " +
@@ -105,16 +124,32 @@ function addList(listInfo) {
 
     let addItemButton = document.getElementById("btn-outline-add-item");
     // addItemButton.click(addItemToList(listInfo._id));
+
     addItemButton.addEventListener("click", function () {
-        console.log("heeleloeowiepwieopwi");
-        addItemToList(listInfo._id);
+        console.log("heeleloeowiepwieopwi"); // default
+
+        let categoryInput = document.getElementById('category-text').value;
+        console.log("** " + categoryInput);
+        let notesInput = document.getElementById('notes-text').value;
+        let costInput = document.getElementById('cost-text').value;
+        let itemInput = document.getElementById('item-text').value;
+
+        let category = document.getElementById('category');
+        let notes = document.getElementById('notes');
+        let cost = document.getElementById('cost');
+        let item = document.getElementById('item-name');
+
+        category.innerText = categoryInput;
+        notes.innerText = notesInput;
+        cost.innerText = costInput;
+        item.innerText = itemInput;
     });
 
-    let categoryText = document.getElementById("category-text");
-    categoryText.setAttribute("id", "category-text-" + listInfo._id);
-
-    let itemText = document.getElementById("item-text");
-    itemText.setAttribute("id", "item-text-" + listInfo._id);
+    // let categoryText = document.getElementById("category-text");
+    // categoryText.setAttribute("id", "category-text-" + listInfo._id);
+    //
+    // let itemText = document.getElementById("item-text");
+    // itemText.setAttribute("id", "item-text-" + listInfo._id);
 
     // We have added one more card
     lengthOfCards++;
@@ -126,12 +161,30 @@ function addList(listInfo) {
     let itemContainer = document.getElementById("items-container" );
     itemContainer.setAttribute("id", "items-container-" + listInfo._id);
 
+    let listNameContainer = document.getElementById("list-name-container");
+    listNameContainer.setAttribute("id", "list-name-container-" + listInfo._id);
+
+    let budget = document.getElementById("budget-label")
+    budget.innerText = "Budget $ " + listInfo.budget;
+
+    let budgetCustom = document.createElement("h5");
+    budgetCustom.innerText = "Budget $ " + listInfo.budget;
+    budgetCustom.style.float = "left";
+    budgetCustom.style.marginLeft = "477px";
+
+    listNameContainer.appendChild(budgetCustom);
+
+    let listName = document.createElement("h3");
+    listName.innerText = listInfo.name;
+    itemContainer.appendChild(listName);
+
     console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
     listInfo.items.forEach(item => {
 
         console.log("my item " + JSON.stringify(item));
+
         let itemInfo = document.createElement("div");
         let category = document.createElement("p");
         let itemName = document.createElement("p");
