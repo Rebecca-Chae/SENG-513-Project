@@ -128,5 +128,6 @@ getLists(username).then(async () => {
                 console.log(`my lists with items: ${JSON.stringify(lists)}`);
             }
         });
+        socket.emit("join-list", list._id);
     });
 });
