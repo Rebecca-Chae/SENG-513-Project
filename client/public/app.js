@@ -1,13 +1,6 @@
 // client-side JS code
 const socket = io();
 
-function createItem(){
-    let itemText = document.getElementById('item-text');
-    console.log(itemText.value)
-
-}
-
-
 let addListButton = document.getElementById('add-list-button');
 addListButton.addEventListener('click', function () {
 
@@ -64,7 +57,6 @@ addListButton.addEventListener('click', function () {
             "<div class='collapse show'> " +
                 "<div class='card card-body' style='width: 650px;'>" +
                 "<div style='min-height: 120px;'>"+
-                // "<div class='modal-card-body' style='width: 650px;'>" +
                 "<h3>Default List</h3>" +
                 "<h5 id='budget-label'>Budget $</h5>" +
                 "<hr class='new1'>" +
@@ -73,47 +65,14 @@ addListButton.addEventListener('click', function () {
                 "<h5 id='notes-label'>Notes</h5>" +
                 "</div>" +
                 "<ul class = 'list'>" +
-                "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
-                "<label>Name</label>"+
-                "<input type='text' id = 'item-text' name='item'>" +
-                "<label id='notes-label'>Category</label>"+
-                "<input type='text' id = 'category-text' name='category'>"+
-                "<label>Notes</label>"+
-                "<input type='text' id = 'notes-text' name='notes'>"+
+                "<li><input type='checkbox' name='itemCheckBox'></li>" +
                 "</ul>" +
                 "<hr />" +
-                // "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item' onclick='createItem()'>Add Item</button>" +
-                // "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
-                // "<div class='modal-dialog'>" +
-                // "<div class='modal-content'>" +
-                // "<div class='modal-header'>" +
-                // "<h3>Add Item to List</h3>" +
-                // "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
-                // "</div>" +
-                // "<div class='modal-body'>" +
-                // "<form>" +
-                // "<div class='mb-3'>" +
-                // "<label for='recipient-name' class='col-form-label'>Category:</label>" +
-                // "<input type='text' class='form-control'>" +
-                // "<label for='recipient-name' class='col-form-label'>Item:</label>" +
-                // "<input type='text' class='form-control'>" +
-                // "<label for='message-text' class='col-form-label'>Notes:</label>" +
-                // "<textarea class='form-control' id='message-text'></textarea>" +
-                // "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
-                // "<input type='text' class='form-control'>" +
-                // "</div>" +
-                // "</form>" +
-                // "</div>" +
-                // "<div class='modal-footer'>" +
-                // "<button type='button' class='btn btn-secondary'>Add</button>" +
-                // "</div>" +
-                // "</div>" +
-                // "</div>" +
-                "</a>" +
+                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
                 "</div>" +
                 "</div> " +
                 "</div> " +
-                "</div>"
+                "</div>"                
     );
 
     // We have added one more card
@@ -136,7 +95,7 @@ addListButton.addEventListener('click', function () {
 //   // Update the modal's content.
 //   const modalTitle = exampleModal.querySelector('.modal-title');
 //   const modalBodyInput = exampleModal.querySelector('.modal-body input');
-//
+
 //   modalTitle.textContent = `Add to List ${recipient}`;
 //   modalBodyInput.value = recipient;
 // })
@@ -161,16 +120,44 @@ const getLists = async (username) => {
         console.log("Failed to fetch lists");
     }
 }
-getLists(username).then(() => {
-    console.log(`my lists: ${JSON.stringify(lists)}`);
+
+const getListItems = async (listId) => {
+    let url = `http://localhost:3000/items/get-items/${listId}`;
+    let response = await fetch(url, {
+        method: 'GET',
+    });
+    if (response.ok) {
+        let items = await response.json();
+        console.log(`items for list ${listId}: ${JSON.stringify(items)}`)
+        return items;
+    }
+    else {
+        console.log(`Failed to fetch list items for list ${listId}`);
+        return [];
+    }
+};
+
+getLists(username).then(async () => {
+    console.log(`my lists before: ${JSON.stringify(lists)}`);
     const listInfos = document.getElementById('list-infos');
 
-    lists.forEach(list => {
-        const listInfo = document.createElement("list-info");
-        listInfo.setAttribute("name", list.name);
-        listInfo.setAttribute("budget", list.budget);
-        listInfo.setAttribute("total", list.total);
-        listInfo.setAttribute("creator", list.creator);
-        listInfos.appendChild(listInfo);
+    let listsProcessed = 0;
+    await lists.forEach(list => {
+        console.log(list._id);
+        getListItems(list._id).then(listItems => {
+            list["items"] = listItems;
+
+            const listInfo = document.createElement("list-info");
+            listInfo.setAttribute("name", list.name);
+            listInfo.setAttribute("budget", list.budget);
+            listInfo.setAttribute("total", list.total);
+            listInfo.setAttribute("creator", list.creator);
+            listInfos.appendChild(listInfo);
+
+            listsProcessed++;
+            if (listsProcessed === lists.length) {
+                console.log(`my lists with items: ${JSON.stringify(lists)}`);
+            }
+        });
     });
 });
