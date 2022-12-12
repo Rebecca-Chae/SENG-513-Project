@@ -26,29 +26,34 @@
                         <div style="min-height: 120px;">
                             <div id="category-section">
                                 <label>Category:</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control" id='category-text'>
                                 <div id="smaller-items-section">
                                     <label>Item:</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id='item-text'>
                                     <label>Notes:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                    <textarea class="form-control" id="notes-text"></textarea>
                                     <label>Cost:</label>
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" id='cost-text'>
 
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary" id="btn-outline-add-item" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="Item">Add Item</button>
+                            <button type="button" class="btn btn-secondary" id="btn-outline-add-item">Add Item</button>
 
                             <h3>Default List</h3>
-
+<!--                            <div id="main-container"></div>-->
+                            <div class="item-container">
+                                <p class="category">category</p>
+                                <p class="item-name">item-name</p>
+                                <p class="notes">notes</p>
+                                <p class="cost">cost</p>
+                            </div>
                                 <h5 id="budget-label">Budget $</h5>
                                 <hr />
                                 <div>
                                     <h5 style="float:left"> <u>Produce</u></h5>
                                     <h5 id="notes-label">Notes</h5>
                                 </div>
-                                </div>
-
+                        </div>
                     </div>
                 </div>
             </div>

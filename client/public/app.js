@@ -10,8 +10,18 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function addItemToList(listId) {
+    console.log(`${listId}`)
+    let category = document.getElementById('category-text-' + listId).value;
+    console.log(category)
+    let notes = document.getElementById('notes-text-' + listId).value;
+    console.log(notes);
+    let item = document.getElementById('item-text' + listId).value;
+    console.log(item);
+
+}
+
 function addList(listInfo) {
-    console.log(listInfo.name);
 
     const allInnerCards = document.querySelectorAll('.inner-card');
 
@@ -54,6 +64,8 @@ function addList(listInfo) {
     buttonCreated.setAttribute("aria-controls", "lst-" +  listInfo._id)
     buttonCreated.innerText = "myList " + listInfo._id;
 
+    const addItemToListId = addItemToList.bind(`${listInfo._id}`);
+
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
     "<div class='inner-card' style='min-height: 120px;'> " +
@@ -61,18 +73,19 @@ function addList(listInfo) {
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
             "<label>Category:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id='category-text'>" +
             "<div id='smaller-items-section'>" +
             "<label>Item:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id='item-text'>" +
             "<label>Notes:</label>" +
-            "<textarea class='form-control' id='message-text'></textarea>" +
+            "<textarea class='form-control' id='notes-text'></textarea>" +
             "<label>Cost:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id='cost-text'>" +
             "</div>" +
             "</div>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'>Add Item</button>" +
             "<h3>Default List</h3>" +
+            "<div id='items-container'></div>" +
             "<h5 id='budget-label'>Budget $</h5>" +
             "<hr class='new1'>" +
             "<div style='clear: both'>" +
@@ -85,12 +98,55 @@ function addList(listInfo) {
             "</div>"
     );
 
+    let addItemButton = document.getElementById("btn-outline-add-item");
+    // addItemButton.click(addItemToList(listInfo._id));
+    addItemButton.addEventListener("click", function () {
+        console.log("heeleloeowiepwieopwi");
+        addItemToList(listInfo._id);
+    });
+
+    let categoryText = document.getElementById("category-text");
+    categoryText.setAttribute("id", "category-text-" + listInfo._id);
+
+    let itemText = document.getElementById("item-text");
+    itemText.setAttribute("id", "item-text-" + listInfo._id);
+
     // We have added one more card
     lengthOfCards++;
     let cardCreated = document.getElementsByClassName("collapse")[lengthOfCards-1];
 
     // Idea is for each button to have its own collapse element. Do that by linking data-bs-target with id
     cardCreated.setAttribute("id", "lst-" + listInfo._id)
+
+    let itemContainer = document.getElementById("items-container" );
+    itemContainer.setAttribute("id", "items-container-" + listInfo._id);
+
+    console.log("lsit info " + JSON.stringify(listInfo));
+    console.log("name: "+ listInfo.name);
+    console.log("budget: " + listInfo.budget);
+    listInfo.items.forEach(item => {
+
+        console.log("my item " + JSON.stringify(item));
+        let itemInfo = document.createElement("div");
+        let category = document.createElement("p");
+        let itemName = document.createElement("p");
+        let notes = document.createElement("p");
+        let price = document.createElement("p");
+
+        category.innerText = item.category;
+        itemName.innerText = item.itemName;
+        notes.innerText = item.notes;
+        price.innerText = item.price;
+        itemInfo.appendChild(category);
+        itemInfo.appendChild(itemName);
+        itemInfo.appendChild(notes);
+        itemInfo.appendChild(price);
+
+        itemContainer.appendChild(itemInfo);
+
+        itemInfo.style.display = "flex";
+        itemInfo.style.columnGap = "20px";
+    });
 }
 
 // const exampleModal = document.getElementById('exampleModal');
@@ -158,9 +214,10 @@ getLists(username).then(async () => {
             listsProcessed++;
             if (listsProcessed === lists.length) {
                 console.log(`my lists with items: ${JSON.stringify(lists)}`);
+
             }
+            addList(list);
         });
-        addList(list);
     });
 });
 
