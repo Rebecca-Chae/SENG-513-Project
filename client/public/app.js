@@ -87,9 +87,9 @@ function addList(listInfo) {
             "<input type='text' class='form-control' id ='cost-text'>" +
             "</div>" +
             "</div>" +
+            "<hr class='new1'>" +
             "<h3>Default List</h3>" +
             "<h5 id='budget-label'>Budget $</h5>" +
-            "<hr class='new1'>" +
             "<div style='clear: both'>" +
             "<h5 style='float:left'> <u>Produce</u></h5>" +
             "<h5 id='notes-label'>Notes</h5>" +
