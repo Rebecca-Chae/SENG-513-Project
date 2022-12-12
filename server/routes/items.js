@@ -5,8 +5,8 @@ const Item = require("../models/item.model");
 const List = require("../models/list.model");
 
 // Get all items in the list, method: POST
-router.route("/get-items").get((req, res) => {
-    List.findOne({ _id: req.body.listID })
+router.route("/get-items/:listID").get((req, res) => {
+    Item.find({ listID: req.params.listID })
         .then(items => res.json(items))
         .catch(err => res.status(500).json("Error: " + err));
 });
@@ -18,7 +18,13 @@ router.route("/add-item").post((req, res) => {
             if (list === null) {
                 res.status(400).json(`Error: no list with ID ${req.body.listID} exists`);
             } else {
-                const newItem = new Item({ itemName: req.body.itemName, category: req.body.category, listID: req.body.listID });
+                const newItem = new Item({
+                    itemName: req.body.itemName,
+                    category: req.body.category,
+                    notes: req.body.notes || "",
+                    price: req.body.price || 0,
+                    listID: req.body.listID
+                });
                 newItem.save()
                     .then(() => res.status(200).json())
                     .catch(err => res.status(500).json("Error: " + err));

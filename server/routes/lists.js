@@ -7,7 +7,7 @@ const List = require("../models/list.model");
     POST REQUESTS 
 */
 
-//Create a new list given a user ID it belongs to
+//Create a new list given a username
 router.route("/new-list").post((req, res) => {
     User.findOne({ username: req.body.username})
         .then(user => {
