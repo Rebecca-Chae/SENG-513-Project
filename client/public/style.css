@@ -136,20 +136,60 @@ hr{
     margin-left: 450px;
 }
 #btn-outline-add-item{
-    color: black;
+    color: white;
     border-color: #3ECAC1;
     font-family: 'Baloo Da 2', sans-serif;
     font-style: normal;
-    width: 95px;
-    background-color: white;
-    /* This styling is added if we want this "Add List" button to always be positioned at the bottom of the page  */
-    /* position: absolute; */
-    /* left: 100px; */
-    /* top: 650px; */
+    width: 125px;
+    background-color: #186368;
+    height:41px;
+    margin-left: 254px;
     
 }
 
 #smaller-items-section{
     display: flex;
+    color: #186368;
+    margin-left: 34px;
+    font-weight: 600;
 
+}
+#category-section{
+    color: #186368;
+    border-color: #3ECAC1;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-style: normal;
+    display: flex;
+   
+
+}
+#category-text{
+    margin-left: 10px;
+    margin-right: 25px;
+    width:125px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #186368;
+
+}
+#label-forms{
+    line-height: 10px;
+    margin-bottom: 50px;
+}
+#item-text,#notes-text,#cost-text{
+    margin-left: 10px;
+    margin-right: 25px;
+    width:125px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #186368;
+
+}
+#title{
+    font-size: 28px;
+    font-weight: 800;
+    text-decoration: underline;
+    color: #186368;
 }

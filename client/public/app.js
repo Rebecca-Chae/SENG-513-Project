@@ -71,18 +71,22 @@ function addList(listInfo) {
             "<div class='collapse show'> " +
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
-            "<label>Category:</label>" +
+            "<div id='add-list-big-div'>" +
+            "<label id='title'>Add Item To List</label>" +
+            "<div id='category-section'>" +
+            "<label id='form-labels'>Category:</label>" +
             "<input type='text' class='form-control' id='category-text'>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList()'>Add Item</button>" +
+            "</div>" +
             "<div id='smaller-items-section'>" +
-            "<label>Item:</label>" +
+            "<label id='form-labels'>Item:</label>" +
             "<input type='text' class='form-control' id ='item-text'>" +
-            "<label>Notes:</label>" +
+            "<label id='form-labels'>Notes:</label>" +
             "<input type='text' class='form-control' id='notes-text'>"+
-            "<label>Cost:</label>" +
+            "<label id='form-labels'>Cost:</label>" +
             "<input type='text' class='form-control' id ='cost-text'>" +
             "</div>" +
             "</div>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList()'>Add Item</button>" +
             "<h3>Default List</h3>" +
             "<h5 id='budget-label'>Budget $</h5>" +
             "<hr class='new1'>" +
