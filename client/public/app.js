@@ -55,21 +55,78 @@ addListButton.addEventListener('click', function () {
     lastInnerCardCreated.insertAdjacentHTML("afterend",
     "<div class='inner-card' style='min-height: 120px;'> " +
             "<div class='collapse show'> " +
-                "<div class='card card-body' style='width: 700px;'>" +
+                "<div class='card card-body' style='width: 650px;'>" +
+                "<div style='min-height: 120px;'>"+
+                "<div class='modal-card-body' style='width: 650px;'>" +
+                "<h3>Default List</h3>" +
+                "<h5 id='budget-label'>Budget $</h5>" +
+                "<hr class='new1'>" +
+                "<div style='clear: both'>" +
+                "<h5 style='float:left'> <u>Produce</u></h5>" +
+                "<h5 id='notes-label'>Notes</h5>" +
+                "</div>" +
+                "<ul class = 'list'>" +
+                "<li><input type='checkbox' name='item'>Apple <a href='#'>&#10006</a></li>" +
+                "</ul>" +
+                "<hr />" +
+                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+                "<a class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
+                "<div class='modal-dialog'>" +
+                "<div class='modal-content'>" +
+                "<div class='modal-header'>" +
+                "<h3>Add Item to List</h3>" +
+                "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
+                "</div>" +
+                "<div class='modal-body'>" +
+                "<form>" +
+                "<div class='mb-3'>" +
+                "<label for='recipient-name' class='col-form-label'>Category:</label>" +
+                "<input type='text' class='form-control'>" +
+                "<label for='recipient-name' class='col-form-label'>Item:</label>" +
+                "<input type='text' class='form-control'>" +
+                "<label for='message-text' class='col-form-label'>Notes:</label>" +
+                "<textarea class='form-control' id='message-text'></textarea>" +
+                "<label for='recipient-name' class='col-form-label'>Cost:</label>" +
+                "<input type='text' class='form-control'>" +
+                "</div>" +
+                "</form>" +
+                "</div>" +
+                "<div class='modal-footer'>" +
+                "<button type='button' class='btn-modal-card'>Add</button>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</a>" +
+                "</div>" +
                 "</div> " +
-            "</div> " +
-        "</div>"
+                "</div> " +
+                "</div>"                
     );
 
     // We have added one more card
     lengthOfCards++;
     let cardCreated = document.getElementsByClassName("collapse")[lengthOfCards-1];
-    let cardValue = document.getElementsByClassName("card card-body")[lengthOfCards-1];
 
     // Idea is for each button to have its own collapse element. Do that by linking data-bs-target with id
     cardCreated.setAttribute("id", "lst-" + buttonId.toString())
-    cardValue.innerText = "placeholder: " + buttonId;
 });
+
+const exampleModal = document.getElementById('exampleModal');
+exampleModal.addEventListener('show.bs.modal', (e) => {
+  // Button that triggered the modal
+  const buttonforadditem = e.relatedTarget;
+  // Extract info from data-mdb-* attributes
+  const recipient = buttonforadditem.getAttribute('data-bs-whatever');
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  const modalTitle = exampleModal.querySelector('.modal-title');
+  const modalBodyInput = exampleModal.querySelector('.modal-body input');
+
+  modalTitle.textContent = `Add to List ${recipient}`;
+  modalBodyInput.value = recipient;
+})
 
 console.log("hello from client");
 
