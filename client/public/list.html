@@ -11,7 +11,7 @@
     <div id="logo"><img src="images/logo.png" alt="Go Grocery text in cursive"></div>
 </nav>
 <section>
-    <h3 id="list-title">G9's Grocery List</h3>
+    <h3 class="title">G9's Grocery List</h3>
     <div id="flex-container">
         <div id="lists-container">
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#lst-0"
@@ -24,21 +24,23 @@
                 <div class="collapse show" id="lst-0">
                     <div class="card card-body" style="width: 650px;">
                         <div style="min-height: 120px;">
-                            <div id="category-section">
-                                <label>Category:</label>
-                                <input type="text" class="form-control" id='category-text'>
+                            <div id="add-list-big-div">
+                            <label class="title">Add Item To List</label>
+                                <div id="category-section">
+                                    <label class="form-labels">Category:</label>
+                                    <input type="text" class="form-control" id='category-text'>
+                                    <button type="button" class="btn btn-secondary" id="btn-outline-add-item">Add Item</button>
+                                </div>
                                 <div id="smaller-items-section">
-                                    <label>Item:</label>
-                                    <input type="text" class="form-control" id='item-text'>
-                                    <label>Notes:</label>
-                                    <textarea class="form-control" id="notes-text"></textarea>
-                                    <label>Cost:</label>
-                                    <input type="text" class="form-control" id='cost-text'>
-
+                                    <label class="form-labels">Item:</label>
+                                    <input type="text" class="form-control" id="item-text">
+                                    <label class="form-labels">Notes:</label>
+                                    <input type="text" class="form-control" id="notes-text">
+                                    <label class="form-labels">Cost:</label>
+                                    <input type="text" class="form-control" id="cost-text">
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary" id="btn-outline-add-item">Add Item</button>
-
+                            <hr />
                             <h3>Default List</h3>
 <!--                            <div id="main-container"></div>-->
                             <div class="item-container">

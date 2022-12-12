@@ -22,6 +22,7 @@ function addItemToList(listId) {
 }
 
 function addList(listInfo) {
+    console.log(listInfo.name);
 
     const allInnerCards = document.querySelectorAll('.inner-card');
 
@@ -72,22 +73,26 @@ function addList(listInfo) {
             "<div class='collapse show'> " +
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
-            "<label>Category:</label>" +
+            "<div id='add-list-big-div'>" +
+            "<label id='title'>Add Item To List</label>" +
+            "<div id='category-section'>" +
+            "<label id='form-labels'>Category:</label>" +
             "<input type='text' class='form-control' id='category-text'>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList()'>Add Item</button>" +
+            "</div>" +
             "<div id='smaller-items-section'>" +
-            "<label>Item:</label>" +
-            "<input type='text' class='form-control' id='item-text'>" +
-            "<label>Notes:</label>" +
-            "<textarea class='form-control' id='notes-text'></textarea>" +
-            "<label>Cost:</label>" +
-            "<input type='text' class='form-control' id='cost-text'>" +
+            "<label id='form-labels'>Item:</label>" +
+            "<input type='text' class='form-control' id ='item-text'>" +
+            "<label id='form-labels'>Notes:</label>" +
+            "<input type='text' class='form-control' id='notes-text'>"+
+            "<label id='form-labels'>Cost:</label>" +
+            "<input type='text' class='form-control' id ='cost-text'>" +
             "</div>" +
             "</div>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'>Add Item</button>" +
+            "<hr class='new1'>" +
             "<h3>Default List</h3>" +
             "<div id='items-container'></div>" +
             "<h5 id='budget-label'>Budget $</h5>" +
-            "<hr class='new1'>" +
             "<div style='clear: both'>" +
             "<h5 style='float:left'> <u>Produce</u></h5>" +
             "<h5 id='notes-label'>Notes</h5>" +
@@ -214,7 +219,6 @@ getLists(username).then(async () => {
             listsProcessed++;
             if (listsProcessed === lists.length) {
                 console.log(`my lists with items: ${JSON.stringify(lists)}`);
-
             }
             addList(list);
         });
