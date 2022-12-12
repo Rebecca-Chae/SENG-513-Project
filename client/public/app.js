@@ -10,6 +10,15 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function addItemToList() {
+    let category = document.getElementById('category-text').value;
+    console.log(category)
+    let notes = document.getElementById('notes-text').value;
+    console.log(notes);
+    let item = document.getElementById('item-text').value;
+    console.log(item);
+
+}
 function addList(listInfo) {
     console.log(listInfo.name);
 
@@ -46,6 +55,8 @@ function addList(listInfo) {
             "</button>"
     );
 
+
+
     // We have added one more button
     lengthOfButtons++;
     let buttonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
@@ -61,17 +72,17 @@ function addList(listInfo) {
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
             "<label>Category:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id='category-text'>" +
             "<div id='smaller-items-section'>" +
             "<label>Item:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id ='item-text'>" +
             "<label>Notes:</label>" +
-            "<textarea class='form-control' id='message-text'></textarea>" +
+            "<input type='text' class='form-control' id='notes-text'>"+
             "<label>Cost:</label>" +
-            "<input type='text' class='form-control'>" +
+            "<input type='text' class='form-control' id ='cost-text'>" +
             "</div>" +
             "</div>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList()'>Add Item</button>" +
             "<h3>Default List</h3>" +
             "<h5 id='budget-label'>Budget $</h5>" +
             "<hr class='new1'>" +
