@@ -55,24 +55,31 @@ addListButton.addEventListener('click', function () {
     lastInnerCardCreated.insertAdjacentHTML("afterend",
     "<div class='inner-card' style='min-height: 120px;'> " +
             "<div class='collapse show'> " +
-                "<div class='card card-body' style='width: 650px;'>" +
-                "<div style='min-height: 120px;'>"+
-                "<h3>Default List</h3>" +
-                "<h5 id='budget-label'>Budget $</h5>" +
-                "<hr class='new1'>" +
-                "<div style='clear: both'>" +
-                "<h5 style='float:left'> <u>Produce</u></h5>" +
-                "<h5 id='notes-label'>Notes</h5>" +
-                "</div>" +
-                "<ul class = 'list'>" +
-                "<li><input type='checkbox' name='itemCheckBox'></li>" +
-                "</ul>" +
-                "<hr />" +
-                "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
-                "</div>" +
-                "</div> " +
-                "</div> " +
-                "</div>"                
+            "<div class='card card-body' style='width: 650px;'>" +
+            "<div style='min-height: 120px;'>"+
+            "<label>Category:</label>" +
+            "<input type='text' class='form-control'>" +
+            "<div id='smaller-items-section'>" +
+            "<label>Item:</label>" +
+            "<input type='text' class='form-control'>" +
+            "<label>Notes:</label>" +
+            "<textarea class='form-control' id='message-text'></textarea>" +
+            "<label>Cost:</label>" +
+            "<input type='text' class='form-control'>" +
+            "</div>" +
+            "</div>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='Item'>Add Item</button>" +
+            "<h3>Default List</h3>" +
+            "<h5 id='budget-label'>Budget $</h5>" +
+            "<hr class='new1'>" +
+            "<div style='clear: both'>" +
+            "<h5 style='float:left'> <u>Produce</u></h5>" +
+            "<h5 id='notes-label'>Notes</h5>" +
+            "</div>" +
+            "</div>" +
+            "</div> " +
+            "</div> " +
+            "</div>"                
     );
 
     // We have added one more card

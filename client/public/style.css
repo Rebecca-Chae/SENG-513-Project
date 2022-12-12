@@ -149,6 +149,7 @@ hr{
     
 }
 
-#addlist-container{
+#smaller-items-section{
+    display: flex;
 
 }
