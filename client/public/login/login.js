@@ -25,28 +25,16 @@ async function createAccount(usr, pass, confirmPass) {
     else{
         console.log("Account did not get created")
         console.log(response.status)
-        if(response.status === 400 && usr!="" && pass!="" && confirmPass!="" ){
-
-            let registerError = document.getElementById("register-error").innerText = "The account already exists. Please try logging in instead."
-            let registerSuccess = document.getElementById("register-success").innerText = ""
-        }
-        else if(response.status === 500){
-            let registerError = document.getElementById("register-error").innerText = "An unexpected error has occurred. Please try again later."
+            let registerError = document.getElementById("register-error").innerText = "The account was not created. Please check your credentials or use different credentials."
             let registerSuccess = document.getElementById("register-success").innerText = ""
 
-        }
     }
 
 
 }
 
 function checkPasswordIsSame(pass, confirmPass) {
-    if(pass == confirmPass){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return pass === confirmPass;
 }
 
 function checkInfoFilled(usr, pass, confirmPass) {
@@ -115,4 +103,8 @@ function checkAcc() {
     }
     getAcc(username.value, password.value)
 
+    }
+
+    function loadSignup(){
+        window.location.href = 'login/singnup.html';
     }
