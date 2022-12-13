@@ -34,8 +34,10 @@ function addItemToList(listId) {
     console.log(category)
     let notes = document.getElementById('notes-text-' + listId).value;
     console.log(notes);
-    let item = document.getElementById('item-text' + listId).value;
+    let item = document.getElementById('item-text-' + listId).value;
     console.log(item);
+    let cost = document.getElementById('cost-text-' + listId).value;
+    console.log(cost);
 
 }
 
@@ -95,16 +97,16 @@ function addList(listInfo) {
             "<label id='title'>Add Item To List</label>" +
             "<div id='category-section'>" +
             "<label id='form-labels'>Category:</label>" +
-            "<input type='text' class='form-control' id='category-text'>" +
+            "<input type='text' class='form-control' id='category-text-" +listInfo._id+ "'>" +
             "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
             "</div>" +
             "<div id='smaller-items-section'>" +
             "<label id='form-labels'>Item:</label>" +
-            "<input type='text' class='form-control' id ='item-text'>" +
+            "<input type='text' class='form-control' id ='item-text-" +listInfo._id+ "'>" +
             "<label id='form-labels'>Notes:</label>" +
-            "<input type='text' class='form-control' id='notes-text'>"+
+            "<input type='text' class='form-control' id='notes-text-" +listInfo._id+ "'>"+
             "<label id='form-labels'>Cost:</label>" +
-            "<input type='text' class='form-control' id ='cost-text'>" +
+            "<input type='text' class='form-control' id ='cost-text-" +listInfo._id+ "'>" +
             "</div>" +
             "</div>" +
             "<hr class='new1'>" +
