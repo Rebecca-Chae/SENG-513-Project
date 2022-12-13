@@ -10,32 +10,32 @@ addListButton.addEventListener('click', function () {
     });
 });
 
-function addItemToList() {
+function addItemToList(listId) {
     console.log("trigerrred");
-    // console.log(`${listId}`)
+    console.log(`${listId}`)
 
-    let categoryInput = document.getElementById('category-text').value;
-    console.log("** " + categoryInput);
-    let notesInput = document.getElementById('notes-text').value;
-    let costInput = document.getElementById('cost-text').value;
-    let itemInput = document.getElementById('item-text').value;
+    // let categoryInput = document.getElementById('category-text').value;
+    // console.log("** " + categoryInput);
+    // let notesInput = document.getElementById('notes-text').value;
+    // let costInput = document.getElementById('cost-text').value;
+    // let itemInput = document.getElementById('item-text').value;
+    //
+    // let category = document.getElementById('category');
+    // let notes = document.getElementById('notes');
+    // let cost = document.getElementById('cost');
+    // let item = document.getElementById('item-name');
 
-    let category = document.getElementById('category');
-    let notes = document.getElementById('notes');
-    let cost = document.getElementById('cost');
-    let item = document.getElementById('item-name');
+    // category.innerText = categoryInput;
+    // notes.innerText = notesInput;
+    // cost.innerText = costInput;
+    // item.innerText = itemInput;
 
-    category.innerText = categoryInput;
-    notes.innerText = notesInput;
-    cost.innerText = costInput;
-    item.innerText = itemInput;
-
-    // let category = document.getElementById('category-text-' + listId).value;
-    // console.log(category)
-    // let notes = document.getElementById('notes-text-' + listId).value;
-    // console.log(notes);
-    // let item = document.getElementById('item-text' + listId).value;
-    // console.log(item);
+    let category = document.getElementById('category-text-' + listId).value;
+    console.log(category)
+    let notes = document.getElementById('notes-text-' + listId).value;
+    console.log(notes);
+    let item = document.getElementById('item-text' + listId).value;
+    console.log(item);
 
 }
 
@@ -96,7 +96,7 @@ function addList(listInfo) {
             "<div id='category-section'>" +
             "<label id='form-labels'>Category:</label>" +
             "<input type='text' class='form-control' id='category-text'>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList()'>Add Item</button>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
             "</div>" +
             "<div id='smaller-items-section'>" +
             "<label id='form-labels'>Item:</label>" +
