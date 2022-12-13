@@ -50,6 +50,11 @@ function checkPasswordIsSame(pass, confirmPass) {
 }
 
 function checkInfoFilled(usr, pass, confirmPass) {
+    
+    document.getElementById("username-error").innerText = "";
+    document.getElementById("password-error").innerText = "";
+    document.getElementById("password-re-enter-error").innerText = "";
+    
     if(usr===""){
        let error_usr = document.getElementById("username-error").innerText = "Please enter a username."
     }
@@ -66,17 +71,15 @@ function getInfo(){
     password = document.getElementById("password");
     confirmPassword = document.getElementById("confirmPassword");
     checkInfoFilled(username.value, password.value, confirmPassword.value);
-    let checkPass = checkPasswordIsSame(password.value, confirmPassword.value);
+   
+   let checkPass = checkPasswordIsSame(password.value, confirmPassword.value);
     if(checkPass == false){
         let error_password = document.getElementById("password-error").innerText ="The password doesn't match. Please re-enter the password"
         let error_re_enter_password = document.getElementById("password-re-enter-error").innerText ="The password doesn't match. Please re-enter the password"
-
-
-
+        
+    }else {
+        createAccount(username.value, password.value, confirmPassword.value)
     }
-    createAccount(username.value, password.value, confirmPassword.value)
-
-
 }
 
 async function getAcc(usr, pass) {
@@ -96,23 +99,28 @@ async function getAcc(usr, pass) {
         window.location.href = 'list.html';
         console.log(response)
         console.log(JSON.stringify(response.json()))
-    }
-    else if(response.statusText==="Not Found"){
-        loginError.innerText="This account does not exist. Please enter a valid username/password or try signing up"
+    }else if ((usr === "") || (pass === "")){
+        if (usr === "") {
+            let error_usr = document.getElementById("username-error-login-label").innerText = "Please enter a username"
+        }
+        if (pass === "") {
+            let error_pass = document.getElementById("password-error-login-label").innerText = "Please enter a password"
+        }
+    }else if(response.statusText==="Not Found"){
+        loginError.innerText="The username/password is incorrect. Please enter a valid username/password or try signing up"
     }
 
 }
 
 function checkAcc() {
+    
+    document.getElementById("username-error-login-label").innerHTML = "";
+    document.getElementById("password-error-login-label").innerHTML = "";
+    document.getElementById("loginError").innerHTML = "";
+
     username = document.getElementById("usrLogin");
     password = document.getElementById("passLogin")
-    if (username.value === "") {
-        let error_usr = document.getElementById("username-error-login-label").innerText = "Please enter a username"
-
-    }
-    if (password.value === "") {
-        let error_pass = document.getElementById("password-error-login-label").innerText = "Please enter a password"
-    }
+    
     getAcc(username.value, password.value)
 
     }
