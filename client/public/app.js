@@ -1,6 +1,7 @@
 // client-side JS code
 const socket = io();
 const username = localStorage.getItem("username");
+document.getElementById("title-name").innerHTML = username + "'s grocery list";
 
 let addListButton = document.getElementById('add-list-button');
 addListButton.addEventListener('click', function () {
@@ -14,31 +15,48 @@ function addItemToList(listId) {
     console.log("trigerrred");
     console.log(`${listId}`)
 
-    // let categoryInput = document.getElementById('category-text').value;
-    // console.log("** " + categoryInput);
-    // let notesInput = document.getElementById('notes-text').value;
-    // let costInput = document.getElementById('cost-text').value;
-    // let itemInput = document.getElementById('item-text').value;
-    //
-    // let category = document.getElementById('category');
-    // let notes = document.getElementById('notes');
-    // let cost = document.getElementById('cost');
-    // let item = document.getElementById('item-name');
-
-    // category.innerText = categoryInput;
-    // notes.innerText = notesInput;
-    // cost.innerText = costInput;
-    // item.innerText = itemInput;
-
     let category = document.getElementById('category-text-' + listId).value;
-    console.log(category)
     let notes = document.getElementById('notes-text-' + listId).value;
-    console.log(notes);
     let item = document.getElementById('item-text-' + listId).value;
-    console.log(item);
-    let cost = document.getElementById('cost-text-' + listId).value;
-    console.log(cost);
+    let cost = Number(document.getElementById('cost-text-' + listId).value);
 
+    let body = {
+        "itemName": item,
+        "category": category,
+        "notes": notes,
+        "price": cost,
+        "listID": listId
+    }
+
+    createItem(body, listId).then(itemInfo => {
+        console.log(itemInfo);
+        addList(listInfo);
+    })
+}
+
+const createItem = async (body, listId) => {
+    let url = `http://localhost:3000/items/add-item`;
+    console.log("item for " +listId)
+
+    console.log("body: " + JSON.stringify(body));
+
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+
+    //console.log(response);
+    if (response.ok) {
+        let newItem = await response.json();
+        console.log(`New item: ${JSON.stringify(newItem)}`);
+        return newItem.itemInfo;
+    }
+    else {
+        console.log("Failed to create new item");
+    }
 }
 
 function addList(listInfo) {
