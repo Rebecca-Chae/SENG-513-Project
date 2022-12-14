@@ -163,7 +163,7 @@ function addList(listInfo) {
         notes.innerText = notesInput;
         cost.innerText = costInput;
         item.innerText = itemInput;
-    });
+    });    
 
     // let categoryText = document.getElementById("category-text");
     // categoryText.setAttribute("id", "category-text-" + listInfo._id);
@@ -201,6 +201,7 @@ function addList(listInfo) {
     console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
+
     listInfo.items.forEach(item => {
 
         console.log("my item " + JSON.stringify(item));
@@ -210,7 +211,8 @@ function addList(listInfo) {
         let itemName = document.createElement("p");
         let notes = document.createElement("p");
         let price = document.createElement("p");
-
+        let edit = document.createElement('button');
+        
         category.innerText = item.category;
         itemName.innerText = item.itemName;
         notes.innerText = item.notes;
@@ -219,6 +221,46 @@ function addList(listInfo) {
         itemInfo.appendChild(itemName);
         itemInfo.appendChild(notes);
         itemInfo.appendChild(price);
+        itemInfo.appendChild(edit);
+        
+        edit.innerText = "Edit";
+        edit.addEventListener("click", function(e){
+            let updated = e.target.parentElement; // === itemInfo
+            updated.innerHTML = "<label id='form-labels'>" + item.category + ":</label>" +
+            "<input type='text' class='form-control' id ='category-text-" + listInfo._id + "'>" +
+            "<div id='smaller-items-section'>" +
+            "<label id='form-labels'>" + item.itemName + ":</label>" +
+            "<input type='text' class='form-control' id ='item-text-" + listInfo._id + "'>" +
+            "<label id='form-labels'>" + item.notes + ":</label>" +
+            "<input type='text' class='form-control' id ='notes-text-" + listInfo._id + "'>"+
+            "<label id='form-labels'>" + item.price + ":</label>" +
+            "<input type='text' class='form-control' id ='cost-text-" + listInfo._id + "'>";
+            let update = document.createElement('button');    // Button to update
+            updated.appendChild(update);
+
+            update.innerText = "Update";
+            update.addEventListener("click", function(){
+                let newCategory = document.getElementById('category-text-' + listInfo._id).value;
+                changeCategory(newCategory, item._id).then(results => {
+                    console.log(results);
+                });
+
+                let newItemName = document.getElementById('item-text-' + listInfo._id).value;
+                changeItem(newItemName, item._id).then(results => {
+                    console.log(results);
+                });
+
+                let newNotes = document.getElementById('notes-text-' + listInfo._id).value;
+                changeNotes(newNotes, item._id).then(results => {
+                    console.log(results);
+                });
+
+                let newPrice = document.getElementById('cost-text-' + listInfo._id).value;
+                changePrice(newPrice, item._id).then(results => {
+                    console.log(results);
+                });                
+            });
+        });
 
         itemContainer.appendChild(itemInfo);
 
@@ -323,3 +365,91 @@ const createList = async (username, listName) => {
         console.log("Failed to create new list");
     }
 }
+
+const changeItem = async (itemName, itemId) => {
+    let url = `http://localhost:3000/items/${itemId}`;
+    let body = {
+        "item": itemName,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeCategory = async (category, itemId) => {
+    let url = `http://localhost:3000/items/update-category/${itemId}`;
+    let body = {
+        "category": category,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeNotes = async (notes, itemId) => {
+    let url = `http://localhost:3000/items/update-notes/${itemId}`;
+    let body = {
+        "notes": notes,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changePrice = async (price, itemId) => {
+    let url = `http://localhost:3000/items/update-price/${itemId}`;
+    let body = {
+        "price": price,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
