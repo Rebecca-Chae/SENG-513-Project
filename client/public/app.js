@@ -11,6 +11,33 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function displayItem(listId, item) {
+    // merge these together to get the item container that this list belongs to
+    let itemContainer = document.getElementById("items-container-" + listId);
+
+    let itemInfo = document.createElement("div");
+    itemInfo.setAttribute("id", "item-info-" + item._id);
+
+    let category = document.createElement("p");
+    let itemName = document.createElement("p");
+    let notes = document.createElement("p");
+    let price = document.createElement("p");
+
+    category.innerText = item.category;
+    itemName.innerText = item.itemName;
+    notes.innerText = item.notes;
+    price.innerText = item.price;
+    itemInfo.appendChild(category);
+    itemInfo.appendChild(itemName);
+    itemInfo.appendChild(notes);
+    itemInfo.appendChild(price);
+
+    itemContainer.appendChild(itemInfo);
+
+    itemInfo.style.display = "flex";
+    itemInfo.style.columnGap = "20px";
+}
+
 function addItemToList(listId) {
     console.log("trigerrred");
     console.log(`${listId}`)
@@ -30,7 +57,7 @@ function addItemToList(listId) {
 
     createItem(body, listId).then(itemInfo => {
         console.log(itemInfo);
-        addList(listInfo);
+        displayItem(listId, itemInfo);
     })
 }
 
@@ -201,30 +228,7 @@ function addList(listInfo) {
     console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
-    listInfo.items.forEach(item => {
-
-        console.log("my item " + JSON.stringify(item));
-
-        let itemInfo = document.createElement("div");
-        let category = document.createElement("p");
-        let itemName = document.createElement("p");
-        let notes = document.createElement("p");
-        let price = document.createElement("p");
-
-        category.innerText = item.category;
-        itemName.innerText = item.itemName;
-        notes.innerText = item.notes;
-        price.innerText = item.price;
-        itemInfo.appendChild(category);
-        itemInfo.appendChild(itemName);
-        itemInfo.appendChild(notes);
-        itemInfo.appendChild(price);
-
-        itemContainer.appendChild(itemInfo);
-
-        itemInfo.style.display = "flex";
-        itemInfo.style.columnGap = "20px";
-    });
+    listInfo.items.forEach(item => displayItem(listInfo._id, item));
 }
 
 // const exampleModal = document.getElementById('exampleModal');
