@@ -26,7 +26,7 @@ router.route("/add-item").post((req, res) => {
                     listID: req.body.listID
                 });
                 newItem.save()
-                    .then(() => res.status(200).json())
+                    .then(() => res.status(200).json({itemInfo: newItem}))
                     .catch(err => res.status(500).json("Error: " + err));
             }
         })
