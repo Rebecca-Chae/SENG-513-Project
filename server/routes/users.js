@@ -58,7 +58,7 @@ router.route("/login").post((req, res) => {
     const password = req.body.password;
     User.findOne({ username: username, password: password })
         .then(user => {
-            if (user === null) res.status(401).json(user)
+            if (user === null) res.status(404).json(user)
             else res.status(200).json(user)
         })
         .catch(err => res.status(500).json("Error: " + err));
