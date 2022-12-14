@@ -23,14 +23,21 @@ function displayItem(listId, item) {
     let notes = document.createElement("p");
     let price = document.createElement("p");
 
+    let deleteButton = document.createElement("button");
+    deleteButton.setAttribute("id", "delete-item-" + item._id);
+    deleteButton.onclick = function () { deleteItem(listId, item._id); };
+
     category.innerText = item.category;
     itemName.innerText = item.itemName;
     notes.innerText = item.notes;
     price.innerText = item.price;
+    deleteButton.innerText = "\u2716";
+
     itemInfo.appendChild(category);
     itemInfo.appendChild(itemName);
     itemInfo.appendChild(notes);
     itemInfo.appendChild(price);
+    itemInfo.appendChild(deleteButton);
 
     itemContainer.appendChild(itemInfo);
 
@@ -326,4 +333,19 @@ const createList = async (username, listName) => {
     else {
         console.log("Failed to create new list");
     }
+}
+
+function deleteItem(listId, itemId) {
+    console.log(`requested to delete item ${itemId} from list ${listId}`);
+    // let url = `http://localhost:3000/items/${itemId}`;
+    // let response = fetch(url, {
+    //     method: 'DELETE'
+    // }).then(() => {
+    //     if (response.ok) {
+    //         // remove item from display
+    //     }
+    //     else {
+    //         console.log(`Failed to delete item ${itemId}`);
+    //     }
+    // });
 }
