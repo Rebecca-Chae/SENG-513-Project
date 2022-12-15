@@ -70,7 +70,8 @@ function displayItem(listId, item) {
     let itemName = document.createElement("p");
     let notes = document.createElement("p");
     let price = document.createElement("p");
-    
+    let edit = document.createElement('button');
+
     if(item.checked){
         checkBox.checked = true;
     }else{
@@ -93,7 +94,66 @@ function displayItem(listId, item) {
     itemInfo.appendChild(itemName);
     itemInfo.appendChild(notes);
     itemInfo.appendChild(price);
+    itemInfo.appendChild(edit);
     itemInfo.appendChild(deleteButton);
+
+    edit.innerText = "Edit";
+    edit.style.color = "white";
+    edit.style.backgroundColor = "#186368";
+    edit.style.border = "none";
+    edit.style.borderRadius = "5px";
+    edit.style.height = "30px";
+    edit.addEventListener("click", function(e){
+        let updated = e.target.parentElement; // === itemInfo
+        updated.innerHTML = "<label id='form-labels' style = 'color: #186368;'><b>Category:</b></label>" +
+            "<input type='text' id ='newCategory' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.category + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Item:</b></label>" +
+            "<input type='text' id ='newItemName' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.itemName + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Notes:</b></label>" +
+            "<input type='text' id ='newNotes' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.notes + "'>"+
+            "<label id='form-labels' style = 'color: #186368;'><b>Price:</b></label>" +
+            "<input type='text' id ='newPrice' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.price + "'>";
+        let update = document.createElement('button');    // Button to update
+        updated.appendChild(update);
+
+        update.innerText = "Update";
+        update.style.color = "white";
+        update.style.backgroundColor = "#186368";
+        update.style.border = "none";
+        update.style.borderRadius = "5px";
+        update.style.height = "30px";
+        update.style.width = "100px";
+        update.addEventListener("click", function(){
+            let newCategory = document.getElementById('newCategory').value;
+            if (newCategory != ""){
+                changeCategory(newCategory, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newItemName = document.getElementById('newItemName').value;
+            if (newItemName != ""){
+                changeItem(newItemName, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newNotes = document.getElementById('newNotes').value;
+            if (newNotes != ""){
+                changeNotes(newNotes, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newPrice = document.getElementById('newPrice').value;
+            if (newPrice != ""){
+                changePrice(newPrice, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+            location.reload(); // Although there's a better way to show the changed value...
+        });
+    });
 
     itemContainer.appendChild(itemInfo);
 
@@ -253,7 +313,7 @@ function addList(listInfo) {
         notes.innerText = notesInput;
         cost.innerText = costInput;
         item.innerText = itemInput;
-    });
+    });    
 
     // let categoryText = document.getElementById("category-text");
     // categoryText.setAttribute("id", "category-text-" + listInfo._id);
@@ -291,6 +351,7 @@ function addList(listInfo) {
     console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
+
     listInfo.items.forEach(item => displayItem(listInfo._id, item));
 }
 
@@ -411,3 +472,91 @@ function removeItemFromListsArr(listId, itemId) {
        }
     });
 }
+
+const changeItem = async (itemName, itemId) => {
+    let url = `http://localhost:3000/items/${itemId}`;
+    let body = {
+        "item": itemName,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeCategory = async (category, itemId) => {
+    let url = `http://localhost:3000/items/update-category/${itemId}`;
+    let body = {
+        "category": category,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeNotes = async (notes, itemId) => {
+    let url = `http://localhost:3000/items/update-notes/${itemId}`;
+    let body = {
+        "notes": notes,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changePrice = async (price, itemId) => {
+    let url = `http://localhost:3000/items/update-price/${itemId}`;
+    let body = {
+        "price": price,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
