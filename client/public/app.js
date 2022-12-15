@@ -23,15 +23,16 @@ function displayItem(listId, item) {
     let notes = document.createElement("p");
     let price = document.createElement("p");
 
-    let deleteButton = document.createElement("button");
+    let deleteButton = document.createElement("p");
     deleteButton.setAttribute("id", "delete-item-" + item._id);
+    deleteButton.setAttribute("class", "delete-item-button");
     deleteButton.onclick = function () { deleteItem(listId, item._id); };
 
     category.innerText = item.category;
     itemName.innerText = item.itemName;
     notes.innerText = item.notes;
     price.innerText = item.price;
-    deleteButton.innerText = "\u2716";
+    deleteButton.innerText = "\u00d7";
 
     itemInfo.appendChild(category);
     itemInfo.appendChild(itemName);
@@ -336,16 +337,22 @@ const createList = async (username, listName) => {
 }
 
 function deleteItem(listId, itemId) {
-    console.log(`requested to delete item ${itemId} from list ${listId}`);
-    // let url = `http://localhost:3000/items/${itemId}`;
-    // let response = fetch(url, {
-    //     method: 'DELETE'
-    // }).then(() => {
-    //     if (response.ok) {
-    //         // remove item from display
-    //     }
-    //     else {
-    //         console.log(`Failed to delete item ${itemId}`);
-    //     }
-    // });
+    let url = `http://localhost:3000/items/${itemId}`;
+    fetch(url, {
+        method: 'DELETE'
+    }).then(() => {
+        // remove item from display
+        const itemInfo = document.getElementById("item-info-" + itemId);
+        itemInfo.parentNode.removeChild((itemInfo));
+        // remove item from lists array
+        removeItemFromListsArr(listId, itemId);
+    });
+}
+
+function removeItemFromListsArr(listId, itemId) {
+    lists.forEach(list => {
+       if (list._id === listId) {
+           list.items.filter(item => item._id !== itemId);
+       }
+    });
 }

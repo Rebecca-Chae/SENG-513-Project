@@ -35,7 +35,7 @@ router.route("/add-item").post((req, res) => {
 
 // Remove item, method: DELETE
 router.route("/:itemID").delete((req, res) => {
-    Item.remove({ _id: req.params.itemID })
+    Item.deleteOne({ _id: req.params.itemID })
         .then(() => res.status(200).json())
         .catch(err => res.status(500).json("Error: " + err));
 });
