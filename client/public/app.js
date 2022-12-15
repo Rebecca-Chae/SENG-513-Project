@@ -74,12 +74,6 @@ function addList(listInfo) {
         });
     })
 
-    // Gets all list buttons created
-    let buttonsCreated = document.getElementsByClassName("btn btn-primary");
-    let lengthOfButtons = buttonsCreated.length;
-    let lastButtonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
-    lastButtonCreated.style.marginBottom = "10px";
-
     // Gets all card components created
     let cardsCreated = document.getElementsByClassName("card card-body");
     let lengthOfCards = cardsCreated.length;
@@ -88,26 +82,30 @@ function addList(listInfo) {
     let lastInnerCardCreated = document.getElementsByClassName('inner-card')[lengthOfCards-1]
     lastCardCreated.style.marginBottom = "10px";
 
-    // Position this newly created list button after the last created list button (sibling)
-    lastButtonCreated.insertAdjacentHTML("afterend",
-            "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
-                "aria-expanded='false' contenteditable='true'> myList" +
-            "</button>"
-    );
+    let spanContainer = document.getElementById("span-container");
+    let buttonList = document.createElement("button");
+    buttonList.setAttribute("class", "btn btn-primary");
+    buttonList.setAttribute("type", "button");
+    buttonList.setAttribute("data-bs-toggle", "collapse");
+    buttonList.setAttribute("aria-expanded", "false");
+    buttonList.setAttribute("data-bs-target", "#lst-" + listInfo._id)
+    buttonList.setAttribute("aria-controls", "lst-" +  listInfo._id)
+    buttonList.setAttribute("id", "lstDel-" +  listInfo._id)
 
-    // We have added one more button
-    lengthOfButtons++;
-    let buttonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
-    // Here changing data-bs-target value to increase by 1.
-    buttonCreated.setAttribute("data-bs-target", "#lst-" + listInfo._id)
-    buttonCreated.setAttribute("aria-controls", "lst-" +  listInfo._id)
-    buttonCreated.innerText = listInfo.name;
+    buttonList.style.marginTop = "10px";
+    buttonList.style.marginRight = "5px";
+    buttonList.innerText = listInfo.name;
 
-    // const addItemToListId = addItemToList.bind(`${listInfo._id}`);
+    spanContainer.appendChild(buttonList);
+    buttonList.insertAdjacentHTML("afterend", "<button class='btn btn-light btn-sm' id='delete-list' " +
+        "onclick='deleteList()'>Delete list</button>");
+    let deleteList = document.getElementById('delete-list');
+    deleteList.setAttribute("id", listInfo._id);
+
 
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
-    "<div class='inner-card' style='min-height: 120px;'> " +
+    "<div class='inner-card' style='min-height: 120px;' id='cardToDel-" +listInfo._id+ "'> " +
             "<div class='collapse show'> " +
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
@@ -311,6 +309,41 @@ function addList(listInfo) {
         itemInfo.style.marginBottom ="10px";
         itemInfo.style.marginTop ="10px";
     });
+}
+
+function deleteList() {
+    let spanContainer = document.getElementById("span-container");
+    spanContainer.addEventListener("click", function (e) {
+
+        let listId = e.target.id;
+
+        let url = `http://localhost:3000/lists/delete-list/${listId}`;
+        fetch(url, {
+            method: 'DELETE'
+        }).then(() => {
+            // remove list, card and delete button from UI
+            let listToDelete = document.getElementById("lstDel-" + listId);
+            let cardToDelete = document.getElementById("cardToDel-" + listId);
+
+            listToDelete.parentNode.removeChild(listToDelete);
+            cardToDelete.parentNode.removeChild(cardToDelete);
+
+            let buttonDel = document.getElementById(listId);
+            buttonDel.style.display = "none";
+        });
+    });
+}
+
+function deleteDefaultList() {
+    // remove list, card and delete button from UI
+    let listToDelete = document.getElementById("del-list-0");
+    let cardToDelete = document.getElementById("del-card-0");
+
+    listToDelete.parentNode.removeChild(listToDelete);
+    cardToDelete.parentNode.removeChild(cardToDelete);
+
+    let buttonDel = document.getElementById("del-button");
+    buttonDel.style.display = "none";
 }
 
 // const exampleModal = document.getElementById('exampleModal');
