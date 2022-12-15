@@ -11,6 +11,96 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function checkoffItem(itemId){
+    let box = document.getElementById("check-" + itemId);
+    console.log(box);
+    let body = {};
+    if(box.checked == true){
+        body = {"checked": true};
+        console.log(body);
+    }else{
+        body = {"checked": false};
+        console.log(body);
+    };
+
+    check(body,itemId).then(results => {
+        console.log(results);
+    })
+};
+
+const check = async (body, itemId) => {
+    let url = `http://localhost:3000/items/checked/${itemId}`;
+    console.log("body: " + JSON.stringify(body));
+    
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to create new list");
+    }
+};
+
+function displayItem(listId, item) {
+    // merge these together to get the item container that this list belongs to
+    let itemContainer = document.getElementById("items-container-" + listId);
+
+    let itemInfo = document.createElement("div");
+    itemInfo.setAttribute("id", "item-info-" + item._id);
+
+    //Checkbox
+    let checkBox = document.createElement("INPUT");
+    checkBox.setAttribute("type", "checkbox");
+    checkBox.setAttribute("id", "check-" + item._id);
+    
+    checkBox.addEventListener('click', function(){
+        console.log(item._id);
+        checkoffItem(item._id);
+    });
+
+    let category = document.createElement("p");
+    let itemName = document.createElement("p");
+    let notes = document.createElement("p");
+    let price = document.createElement("p");
+    
+    if(item.checked){
+        checkBox.checked = true;
+    }else{
+        checkBox.checked = false;
+    }
+
+    let deleteButton = document.createElement("p");
+    deleteButton.setAttribute("id", "delete-item-" + item._id);
+    deleteButton.setAttribute("class", "delete-item-button");
+    deleteButton.onclick = function () { deleteItem(listId, item._id); };
+
+    category.innerText = item.category;
+    itemName.innerText = item.itemName;
+    notes.innerText = item.notes;
+    price.innerText = item.price;
+    deleteButton.innerText = "\u00d7";
+
+    itemInfo.appendChild(checkBox);
+    itemInfo.appendChild(category);
+    itemInfo.appendChild(itemName);
+    itemInfo.appendChild(notes);
+    itemInfo.appendChild(price);
+    itemInfo.appendChild(deleteButton);
+
+    itemContainer.appendChild(itemInfo);
+
+    itemInfo.style.display = "flex";
+    itemInfo.style.columnGap = "20px";
+}
+
 function addItemToList(listId) {
     console.log("trigerrred");
     console.log(`${listId}`)
@@ -30,7 +120,7 @@ function addItemToList(listId) {
 
     createItem(body, listId).then(itemInfo => {
         console.log(itemInfo);
-        addList(listInfo);
+        displayItem(listId, itemInfo);
     })
 }
 
@@ -309,6 +399,9 @@ function addList(listInfo) {
         itemInfo.style.marginBottom ="10px";
         itemInfo.style.marginTop ="10px";
     });
+
+    listInfo.items.forEach(item => displayItem(listInfo._id, item));
+
 }
 
 function deleteList() {
@@ -345,23 +438,6 @@ function deleteDefaultList() {
     let buttonDel = document.getElementById("del-button");
     buttonDel.style.display = "none";
 }
-
-// const exampleModal = document.getElementById('exampleModal');
-// exampleModal.addEventListener('show.bs.modal', (e) => {
-//   // Button that triggered the modal
-//   const buttonforadditem = e.relatedTarget;
-//   // Extract info from data-mdb-* attributes
-//   const recipient = buttonforadditem.getAttribute('data-bs-whatever');
-//   // If necessary, you could initiate an AJAX request here
-//   // and then do the updating in a callback.
-//   //
-//   // Update the modal's content.
-//   const modalTitle = exampleModal.querySelector('.modal-title');
-//   const modalBodyInput = exampleModal.querySelector('.modal-body input');
-
-//   modalTitle.textContent = `Add to List ${recipient}`;
-//   modalBodyInput.value = recipient;
-// })
 
 console.log("hello from client");
 
@@ -442,6 +518,7 @@ const createList = async (username, listName) => {
         console.log("Failed to create new list");
     }
 }
+
 
 const changeItem = async (itemName, itemId) => {
     let url = `http://localhost:3000/items/${itemId}`;
@@ -530,3 +607,25 @@ const changePrice = async (price, itemId) => {
         console.log("Failed to rename the item");
     }
 };
+
+function deleteItem(listId, itemId) {
+    let url = `http://localhost:3000/items/${itemId}`;
+    fetch(url, {
+        method: 'DELETE'
+    }).then(() => {
+        // remove item from display
+        const itemInfo = document.getElementById("item-info-" + itemId);
+        itemInfo.parentNode.removeChild((itemInfo));
+        // remove item from lists array
+        removeItemFromListsArr(listId, itemId);
+    });
+}
+
+function removeItemFromListsArr(listId, itemId) {
+    lists.forEach(list => {
+       if (list._id === listId) {
+           list.items.filter(item => item._id !== itemId);
+       }
+    });
+}
+

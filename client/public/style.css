@@ -217,3 +217,7 @@ hr{
     /*flex-direction: row;*/
     column-gap: 20px;
 }
+
+.delete-item-button {
+    cursor: pointer;
+}
