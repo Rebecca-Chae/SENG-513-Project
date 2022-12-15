@@ -11,6 +11,44 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function checkoffItem(itemId){
+    let box = document.getElementById("check-" + itemId);
+    console.log(box);
+    let body = {};
+    if(box.checked == true){
+        body = {"checked": true};
+        console.log(body);
+    }else{
+        body = {"checked": false};
+        console.log(body);
+    };
+
+    check(body,itemId).then(results => {
+        console.log(results);
+    })
+};
+
+const check = async (body, itemId) => {
+    let url = `http://localhost:3000/items/checked/${itemId}`;
+    console.log("body: " + JSON.stringify(body));
+    
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to create new list");
+    }
+};
+
 function displayItem(listId, item) {
     // merge these together to get the item container that this list belongs to
     let itemContainer = document.getElementById("items-container-" + listId);
@@ -18,10 +56,26 @@ function displayItem(listId, item) {
     let itemInfo = document.createElement("div");
     itemInfo.setAttribute("id", "item-info-" + item._id);
 
+    //Checkbox
+    let checkBox = document.createElement("INPUT");
+    checkBox.setAttribute("type", "checkbox");
+    checkBox.setAttribute("id", "check-" + item._id);
+    
+    checkBox.addEventListener('click', function(){
+        console.log(item._id);
+        checkoffItem(item._id);
+    });
+
     let category = document.createElement("p");
     let itemName = document.createElement("p");
     let notes = document.createElement("p");
     let price = document.createElement("p");
+    
+    if(item.checked){
+        checkBox.checked = true;
+    }else{
+        checkBox.checked = false;
+    }
 
     let deleteButton = document.createElement("p");
     deleteButton.setAttribute("id", "delete-item-" + item._id);
@@ -34,6 +88,7 @@ function displayItem(listId, item) {
     price.innerText = item.price;
     deleteButton.innerText = "\u00d7";
 
+    itemInfo.appendChild(checkBox);
     itemInfo.appendChild(category);
     itemInfo.appendChild(itemName);
     itemInfo.appendChild(notes);
