@@ -11,6 +11,156 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function checkoffItem(itemId){
+    let box = document.getElementById("check-" + itemId);
+    console.log(box);
+    let body = {};
+    if(box.checked == true){
+        body = {"checked": true};
+        console.log(body);
+    }else{
+        body = {"checked": false};
+        console.log(body);
+    };
+
+    check(body,itemId).then(results => {
+        console.log(results);
+    })
+};
+
+const check = async (body, itemId) => {
+    let url = `http://localhost:3000/items/checked/${itemId}`;
+    console.log("body: " + JSON.stringify(body));
+    
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to create new list");
+    }
+};
+
+function displayItem(listId, item) {
+    // merge these together to get the item container that this list belongs to
+    let itemContainer = document.getElementById("items-container-" + listId);
+
+    let itemInfo = document.createElement("div");
+    itemInfo.setAttribute("id", "item-info-" + item._id);
+
+    //Checkbox
+    let checkBox = document.createElement("INPUT");
+    checkBox.setAttribute("type", "checkbox");
+    checkBox.setAttribute("id", "check-" + item._id);
+    
+    checkBox.addEventListener('click', function(){
+        console.log(item._id);
+        checkoffItem(item._id);
+    });
+
+    let category = document.createElement("p");
+    let itemName = document.createElement("p");
+    let notes = document.createElement("p");
+    let price = document.createElement("p");
+    let edit = document.createElement('button');
+
+    if(item.checked){
+        checkBox.checked = true;
+    }else{
+        checkBox.checked = false;
+    }
+
+    let deleteButton = document.createElement("p");
+    deleteButton.setAttribute("id", "delete-item-" + item._id);
+    deleteButton.setAttribute("class", "delete-item-button");
+    deleteButton.onclick = function () { deleteItem(listId, item._id); };
+
+    category.innerText = item.category;
+    itemName.innerText = item.itemName;
+    notes.innerText = item.notes;
+    price.innerText = item.price;
+    deleteButton.innerText = "\u00d7";
+
+    itemInfo.appendChild(checkBox);
+    itemInfo.appendChild(category);
+    itemInfo.appendChild(itemName);
+    itemInfo.appendChild(notes);
+    itemInfo.appendChild(price);
+    itemInfo.appendChild(edit);
+    itemInfo.appendChild(deleteButton);
+
+    edit.innerText = "Edit";
+    edit.style.color = "white";
+    edit.style.backgroundColor = "#186368";
+    edit.style.border = "none";
+    edit.style.borderRadius = "5px";
+    edit.style.height = "30px";
+    edit.addEventListener("click", function(e){
+        let updated = e.target.parentElement; // === itemInfo
+        updated.innerHTML = "<label id='form-labels' style = 'color: #186368;'><b>Category:</b></label>" +
+            "<input type='text' id ='newCategory' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.category + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Item:</b></label>" +
+            "<input type='text' id ='newItemName' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.itemName + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Notes:</b></label>" +
+            "<input type='text' id ='newNotes' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.notes + "'>"+
+            "<label id='form-labels' style = 'color: #186368;'><b>Price:</b></label>" +
+            "<input type='text' id ='newPrice' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.price + "'>";
+        let update = document.createElement('button');    // Button to update
+        updated.appendChild(update);
+
+        update.innerText = "Update";
+        update.style.color = "white";
+        update.style.backgroundColor = "#186368";
+        update.style.border = "none";
+        update.style.borderRadius = "5px";
+        update.style.height = "30px";
+        update.style.width = "100px";
+        update.addEventListener("click", function(){
+            let newCategory = document.getElementById('newCategory').value;
+            if (newCategory != ""){
+                changeCategory(newCategory, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newItemName = document.getElementById('newItemName').value;
+            if (newItemName != ""){
+                changeItem(newItemName, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newNotes = document.getElementById('newNotes').value;
+            if (newNotes != ""){
+                changeNotes(newNotes, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+
+            let newPrice = document.getElementById('newPrice').value;
+            if (newPrice != ""){
+                changePrice(newPrice, item._id).then(results => {
+                    console.log(results);
+                });
+            }
+            location.reload(); // Although there's a better way to show the changed value...
+        });
+    });
+
+    itemContainer.appendChild(itemInfo);
+
+    itemInfo.style.display = "flex";
+    itemInfo.style.columnGap = "20px";
+}
+
 function addItemToList(listId) {
     console.log("trigerrred");
     console.log(`${listId}`)
@@ -30,7 +180,7 @@ function addItemToList(listId) {
 
     createItem(body, listId).then(itemInfo => {
         console.log(itemInfo);
-        addList(listInfo);
+        displayItem(listId, itemInfo);
     })
 }
 
@@ -74,12 +224,6 @@ function addList(listInfo) {
         });
     })
 
-    // Gets all list buttons created
-    let buttonsCreated = document.getElementsByClassName("btn btn-primary");
-    let lengthOfButtons = buttonsCreated.length;
-    let lastButtonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
-    lastButtonCreated.style.marginBottom = "10px";
-
     // Gets all card components created
     let cardsCreated = document.getElementsByClassName("card card-body");
     let lengthOfCards = cardsCreated.length;
@@ -88,26 +232,30 @@ function addList(listInfo) {
     let lastInnerCardCreated = document.getElementsByClassName('inner-card')[lengthOfCards-1]
     lastCardCreated.style.marginBottom = "10px";
 
-    // Position this newly created list button after the last created list button (sibling)
-    lastButtonCreated.insertAdjacentHTML("afterend",
-            "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
-                "aria-expanded='false' contenteditable='true'> myList" +
-            "</button>"
-    );
+    let spanContainer = document.getElementById("span-container");
+    let buttonList = document.createElement("button");
+    buttonList.setAttribute("class", "btn btn-primary");
+    buttonList.setAttribute("type", "button");
+    buttonList.setAttribute("data-bs-toggle", "collapse");
+    buttonList.setAttribute("aria-expanded", "false");
+    buttonList.setAttribute("data-bs-target", "#lst-" + listInfo._id)
+    buttonList.setAttribute("aria-controls", "lst-" +  listInfo._id)
+    buttonList.setAttribute("id", "lstDel-" +  listInfo._id)
 
-    // We have added one more button
-    lengthOfButtons++;
-    let buttonCreated = document.getElementsByClassName("btn btn-primary")[lengthOfButtons-1];
-    // Here changing data-bs-target value to increase by 1.
-    buttonCreated.setAttribute("data-bs-target", "#lst-" + listInfo._id)
-    buttonCreated.setAttribute("aria-controls", "lst-" +  listInfo._id)
-    buttonCreated.innerText = listInfo.name;
+    buttonList.style.marginTop = "10px";
+    buttonList.style.marginRight = "5px";
+    buttonList.innerText = listInfo.name;
 
-    // const addItemToListId = addItemToList.bind(`${listInfo._id}`);
+    spanContainer.appendChild(buttonList);
+    buttonList.insertAdjacentHTML("afterend", "<button class='btn btn-light btn-sm' id='delete-list' " +
+        "onclick='deleteList()'>Delete list</button>");
+    let deleteList = document.getElementById('delete-list');
+    deleteList.setAttribute("id", listInfo._id);
+
 
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
-    "<div class='inner-card' style='min-height: 120px;'> " +
+    "<div class='inner-card' style='min-height: 120px;' id='cardToDel-" +listInfo._id+ "'> " +
             "<div class='collapse show'> " +
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
@@ -163,7 +311,7 @@ function addList(listInfo) {
         notes.innerText = notesInput;
         cost.innerText = costInput;
         item.innerText = itemInput;
-    });
+    });    
 
     // let categoryText = document.getElementById("category-text");
     // categoryText.setAttribute("id", "category-text-" + listInfo._id);
@@ -201,30 +349,43 @@ function addList(listInfo) {
     console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
-    listInfo.items.forEach(item => {
 
-        console.log("my item " + JSON.stringify(item));
+    listInfo.items.forEach(item => displayItem(listInfo._id, item));
+}
 
-        let itemInfo = document.createElement("div");
-        let category = document.createElement("p");
-        let itemName = document.createElement("p");
-        let notes = document.createElement("p");
-        let price = document.createElement("p");
+function deleteList() {
+    let spanContainer = document.getElementById("span-container");
+    spanContainer.addEventListener("click", function (e) {
 
-        category.innerText = item.category;
-        itemName.innerText = item.itemName;
-        notes.innerText = item.notes;
-        price.innerText = item.price;
-        itemInfo.appendChild(category);
-        itemInfo.appendChild(itemName);
-        itemInfo.appendChild(notes);
-        itemInfo.appendChild(price);
+        let listId = e.target.id;
 
-        itemContainer.appendChild(itemInfo);
+        let url = `http://localhost:3000/lists/delete-list/${listId}`;
+        fetch(url, {
+            method: 'DELETE'
+        }).then(() => {
+            // remove list, card and delete button from UI
+            let listToDelete = document.getElementById("lstDel-" + listId);
+            let cardToDelete = document.getElementById("cardToDel-" + listId);
 
-        itemInfo.style.display = "flex";
-        itemInfo.style.columnGap = "20px";
+            listToDelete.parentNode.removeChild(listToDelete);
+            cardToDelete.parentNode.removeChild(cardToDelete);
+
+            let buttonDel = document.getElementById(listId);
+            buttonDel.style.display = "none";
+        });
     });
+}
+
+function deleteDefaultList() {
+    // remove list, card and delete button from UI
+    let listToDelete = document.getElementById("del-list-0");
+    let cardToDelete = document.getElementById("del-card-0");
+
+    listToDelete.parentNode.removeChild(listToDelete);
+    cardToDelete.parentNode.removeChild(cardToDelete);
+
+    let buttonDel = document.getElementById("del-button");
+    buttonDel.style.display = "none";
 }
 
 // const exampleModal = document.getElementById('exampleModal');
@@ -323,3 +484,112 @@ const createList = async (username, listName) => {
         console.log("Failed to create new list");
     }
 }
+
+function deleteItem(listId, itemId) {
+    let url = `http://localhost:3000/items/${itemId}`;
+    fetch(url, {
+        method: 'DELETE'
+    }).then(() => {
+        // remove item from display
+        const itemInfo = document.getElementById("item-info-" + itemId);
+        itemInfo.parentNode.removeChild((itemInfo));
+        // remove item from lists array
+        removeItemFromListsArr(listId, itemId);
+    });
+}
+
+function removeItemFromListsArr(listId, itemId) {
+    lists.forEach(list => {
+       if (list._id === listId) {
+           list.items.filter(item => item._id !== itemId);
+       }
+    });
+}
+
+const changeItem = async (itemName, itemId) => {
+    let url = `http://localhost:3000/items/${itemId}`;
+    let body = {
+        "item": itemName,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeCategory = async (category, itemId) => {
+    let url = `http://localhost:3000/items/update-category/${itemId}`;
+    let body = {
+        "category": category,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changeNotes = async (notes, itemId) => {
+    let url = `http://localhost:3000/items/update-notes/${itemId}`;
+    let body = {
+        "notes": notes,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
+
+const changePrice = async (price, itemId) => {
+    let url = `http://localhost:3000/items/update-price/${itemId}`;
+    let body = {
+        "price": price,
+    }
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+    if (response.ok) {
+        let result = await response.json();
+        console.log(`${JSON.stringify(result)}`);
+        return result;
+    }
+    else {
+        console.log("Failed to rename the item");
+    }
+};
