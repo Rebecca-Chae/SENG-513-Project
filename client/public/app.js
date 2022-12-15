@@ -227,38 +227,47 @@ function addList(listInfo) {
         edit.addEventListener("click", function(e){
             let updated = e.target.parentElement; // === itemInfo
             updated.innerHTML = "<label id='form-labels'>" + item.category + ":</label>" +
-            "<input type='text' class='form-control' id ='category-text-" + listInfo._id + "'>" +
+            "<input type='text' class='form-control' id ='newCategory' placeholder = '" + item.category + "'>" +
             "<div id='smaller-items-section'>" +
             "<label id='form-labels'>" + item.itemName + ":</label>" +
-            "<input type='text' class='form-control' id ='item-text-" + listInfo._id + "'>" +
+            "<input type='text' class='form-control' id ='newItemName' placeholder = '" + item.itemName + "'>" +
             "<label id='form-labels'>" + item.notes + ":</label>" +
-            "<input type='text' class='form-control' id ='notes-text-" + listInfo._id + "'>"+
+            "<input type='text' class='form-control' id ='newNotes' placeholder = '" + item.notes + "'>"+
             "<label id='form-labels'>" + item.price + ":</label>" +
-            "<input type='text' class='form-control' id ='cost-text-" + listInfo._id + "'>";
+            "<input type='text' class='form-control' id ='newPrice' placeholder = '" + item.price + "'>" + "</div>";
             let update = document.createElement('button');    // Button to update
             updated.appendChild(update);
 
             update.innerText = "Update";
             update.addEventListener("click", function(){
-                let newCategory = document.getElementById('category-text-' + listInfo._id).value;
-                changeCategory(newCategory, item._id).then(results => {
-                    console.log(results);
-                });
+                let newCategory = document.getElementById('newCategory').value;
+                if (newCategory != ""){
+                    changeCategory(newCategory, item._id).then(results => {
+                        console.log(results);
+                    });
+                }
 
-                let newItemName = document.getElementById('item-text-' + listInfo._id).value;
-                changeItem(newItemName, item._id).then(results => {
-                    console.log(results);
-                });
+                let newItemName = document.getElementById('newItemName').value;
+                if (newItemName != ""){
+                    changeItem(newItemName, item._id).then(results => {
+                        console.log(results);
+                    });
+                }
 
-                let newNotes = document.getElementById('notes-text-' + listInfo._id).value;
-                changeNotes(newNotes, item._id).then(results => {
-                    console.log(results);
-                });
+                let newNotes = document.getElementById('newNotes').value;
+                if (newNotes != ""){
+                    changeNotes(newNotes, item._id).then(results => {
+                        console.log(results);
+                    });
+                }
 
-                let newPrice = document.getElementById('cost-text-' + listInfo._id).value;
-                changePrice(newPrice, item._id).then(results => {
-                    console.log(results);
-                });                
+                let newPrice = document.getElementById('newPrice').value;
+                if (newPrice != ""){
+                    changePrice(newPrice, item._id).then(results => {
+                        console.log(results);
+                    });  
+                }
+                location.reload(); // Although there's a better way to show the changed value...
             });
         });
 
