@@ -11,6 +11,54 @@ addListButton.addEventListener('click', function () {
     });
 });
 
+function updateBudgetAndListName(){
+    let list_name_text = document.getElementById("list-name-text").value;
+    let budget = document.getElementById("budget-text").value;
+    console.log(budget);
+    if(budget != "") {
+        let budget_label_update = document.getElementById("budget-label");
+        budget_label_update.innerText = "Budget $ " + budget;
+    }
+
+
+    if(list_name_text != "") {
+        let actual_list_name = document.getElementById("actual-list-name")
+        actual_list_name.innerText = list_name_text;
+        let list_container_button = document.getElementById("list-container-button")
+        list_container_button.innerText = list_name_text;
+        updateListNameReq('lst-0', list_name_text)
+    }
+
+}
+const updateListNameReq = async (listId, list_name) => {
+    let url = `http://localhost:3000/lists/update-name/${listId}`;
+    console.log(url)
+    console.log("item for " +listId)
+
+    let body = {
+        "listName":list_name
+    }
+
+    let response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
+
+    //console.log(response);
+    if (response.ok) {
+        let newListName = await response.json();
+        console.log(`New listName: ${JSON.stringify(newListName)}`);
+        // return newListName.;
+    }
+    else {
+        console.log("Failed to update list name");
+    }
+}
+
+
 function addItemToList(listId) {
     console.log("trigerrred");
     console.log(`${listId}`)
@@ -90,9 +138,9 @@ function addList(listInfo) {
 
     // Position this newly created list button after the last created list button (sibling)
     lastButtonCreated.insertAdjacentHTML("afterend",
-            "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
-                "aria-expanded='false' contenteditable='true'> myList" +
-            "</button>"
+        "<button class='btn btn-primary' type='button' data-bs-toggle='collapse' " +
+        "aria-expanded='false' contenteditable='true'> myList" +
+        "</button>"
     );
 
     // We have added one more button
@@ -107,39 +155,39 @@ function addList(listInfo) {
 
     // Position this newly created card after the last card created
     lastInnerCardCreated.insertAdjacentHTML("afterend",
-    "<div class='inner-card' style='min-height: 120px;'> " +
-            "<div class='collapse show'> " +
-            "<div class='card card-body' style='width: 650px;'>" +
-            "<div style='min-height: 120px;'>"+
-            "<div id='add-list-big-div'>" +
-            "<label id='title'>Add Item To List</label>" +
-            "<div id='category-section'>" +
-            "<label id='form-labels'>Category:</label>" +
-            "<input type='text' class='form-control' id='category-text-" +listInfo._id+ "'>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
-            "</div>" +
-            "<div id='smaller-items-section'>" +
-            "<label id='form-labels'>Item:</label>" +
-            "<input type='text' class='form-control' id ='item-text-" +listInfo._id+ "'>" +
-            "<label id='form-labels'>Notes:</label>" +
-            "<input type='text' class='form-control' id='notes-text-" +listInfo._id+ "'>"+
-            "<label id='form-labels'>Cost:</label>" +
-            "<input type='text' class='form-control' id ='cost-text-" +listInfo._id+ "'>" +
-            "</div>" +
-            "</div>" +
-            "<hr class='new1'>" +
-            // "<h3>Default List</h3>" +
-            "<div id='items-container'></div>" +
-            "<div id='list-name-container'></div>" +
-            // "<h5 id='budget-label'>Budget $</h5>" +
-            // "<div style='clear: both'>" +
-            // "<h5 style='float:left'> <u>Produce</u></h5>" +
-            // "<h5 id='notes-label'>Notes</h5>" +
-            // "</div>" +
-            "</div>" +
-            "</div> " +
-            "</div> " +
-            "</div>"
+        "<div class='inner-card' style='min-height: 120px;'> " +
+        "<div class='collapse show'> " +
+        "<div class='card card-body' style='width: 650px;'>" +
+        "<div style='min-height: 120px;'>"+
+        "<div id='add-list-big-div'>" +
+        "<label id='title'>Add Item To List</label>" +
+        "<div id='category-section'>" +
+        "<label id='form-labels'>Category:</label>" +
+        "<input type='text' class='form-control' id='category-text-" +listInfo._id+ "'>" +
+        "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
+        "</div>" +
+        "<div id='smaller-items-section'>" +
+        "<label id='form-labels'>Item:</label>" +
+        "<input type='text' class='form-control' id ='item-text-" +listInfo._id+ "'>" +
+        "<label id='form-labels'>Notes:</label>" +
+        "<input type='text' class='form-control' id='notes-text-" +listInfo._id+ "'>"+
+        "<label id='form-labels'>Cost:</label>" +
+        "<input type='text' class='form-control' id ='cost-text-" +listInfo._id+ "'>" +
+        "</div>" +
+        "</div>" +
+        "<hr class='new1'>" +
+        // "<h3>Default List</h3>" +
+        "<div id='items-container'></div>" +
+        "<div id='list-name-container'></div>" +
+        // "<h5 id='budget-label'>Budget $</h5>" +
+        // "<div style='clear: both'>" +
+        // "<h5 style='float:left'> <u>Produce</u></h5>" +
+        // "<h5 id='notes-label'>Notes</h5>" +
+        // "</div>" +
+        "</div>" +
+        "</div> " +
+        "</div> " +
+        "</div>"
     );
 
     let addItemButton = document.getElementById("btn-outline-add-item");
