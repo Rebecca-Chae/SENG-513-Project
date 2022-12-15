@@ -112,30 +112,32 @@ function addList(listInfo) {
             "<div class='card card-body' style='width: 650px;'>" +
             "<div style='min-height: 120px;'>"+
             "<div id='add-list-big-div'>" +
-            "<label id='title'>Add Item To List</label>" +
-            "<div id='category-section'>" +
+            "<label id='title' style= 'font-size: 28px;font-weight: 800;text-decoration: underline; color: #186368; margin-bottom: 15px;'>Add To List</label>" +
+            "<div id='listname-section' style=' color: #186368; border-color: #3ECAC1; font-family: 'Baloo Da 2', sans-serif;font-style: normal; display: flex;'>" +
+            "<label class='form-labels' style='font-size: 16px;'>List Name:</label>" +
+            "<input type='text' class='form-control' id='category-text' style = 'margin-left: 10px; margin-right: 25px;width:125px;margin-bottom: 10px; font-size: 16px;font-weight: 600;color: #186368;'>" +
+            "<label class='form-labels' style='font-size: 16px;' >Budget:</label>" +
+            "<input type='text' class='form-control' id='category-text' style = 'margin-left: 10px; margin-right: 25px;width:125px;margin-bottom: 10px; font-size: 16px;font-weight: 600;color: #186368;'>" +
+            "<button type='button' class='btn btn-secondary' id='btn-update'>Update</button>" +    
+            "</div>" +
+            "<div id='category-section' style=' color: #186368; border-color: #3ECAC1; font-family: 'Baloo Da 2', sans-serif;font-style: normal; display: flex; margin-left: 7px;'>" +
             "<label id='form-labels'>Category:</label>" +
-            "<input type='text' class='form-control' id='category-text-" +listInfo._id+ "'>" +
-            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
+            "<input type='text' class='form-control' id='category-text' style = 'margin-left: 10px; margin-right: 25px; width:125px; margin-bottom: 10px; font-size: 16px;font-weight: 600;color: #186368;'" +listInfo._id+ "'>" +
+            "<button type='button' class='btn btn-secondary' id='btn-outline-add-item' style='color: white;border-color: #3ECAC1; font-family: 'Baloo Da 2', sans-serif;font-style: normal; width: 125px; background-color: #186368;height:41px;margin-left: 254px;'  onclick='addItemToList(\"" + listInfo._id + "\")'>Add Item</button>" +
             "</div>" +
-            "<div id='smaller-items-section'>" +
+            "<div ='smaller-items-section' style = 'display: flex; color: #186368; margin-left: 39px;  font-weight: 600;'>" +
             "<label id='form-labels'>Item:</label>" +
-            "<input type='text' class='form-control' id ='item-text-" +listInfo._id+ "'>" +
+            "<input type='text' class='form-control' id ='item-text'" +listInfo._id+ "'>" +
             "<label id='form-labels'>Notes:</label>" +
-            "<input type='text' class='form-control' id='notes-text-" +listInfo._id+ "'>"+
+            "<input type='text' class='form-control' id='notes-text'" +listInfo._id+ "'>"+
             "<label id='form-labels'>Cost:</label>" +
-            "<input type='text' class='form-control' id ='cost-text-" +listInfo._id+ "'>" +
+            "<input type='text' class='form-control' id ='cost-text'" +listInfo._id+ "'>" +
             "</div>" +
             "</div>" +
-            "<hr class='new1'>" +
-            // "<h3>Default List</h3>" +
+            "<hr />" +
             "<div id='items-container'></div>" +
             "<div id='list-name-container'></div>" +
-            // "<h5 id='budget-label'>Budget $</h5>" +
-            // "<div style='clear: both'>" +
-            // "<h5 style='float:left'> <u>Produce</u></h5>" +
-            // "<h5 id='notes-label'>Notes</h5>" +
-            // "</div>" +
+            "<h5 id='notes-label'>Notes</h5>" +
             "</div>" +
             "</div> " +
             "</div> " +
@@ -223,7 +225,7 @@ function addList(listInfo) {
         itemContainer.appendChild(itemInfo);
 
         itemInfo.style.display = "flex";
-        itemInfo.style.columnGap = "20px";
+        itemInfo.style.columnGap = "40px";
     });
 }
 

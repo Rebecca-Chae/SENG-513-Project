@@ -14,15 +14,7 @@ section {
     padding-left: 25px;
 }
 
-/* Name of list page */
-/* #list-title {
-    color: #186368;
-    font-family: 'Baloo Da 2', sans-serif;
-    font-weight: bolder;
-    font-size: xx-large;
-    line-height: 67px;
-    text-decoration-line: underline;
-} */
+
 
 /* Contains both list name button and to-do card component */
 #flex-container {
@@ -210,6 +202,12 @@ hr{
     font-size: 28px;
     font-weight: 800;
     text-decoration: underline;
+    color: #186368;
+    margin-bottom: 15px;
+}
+#list-name{
+    font-size: 25px;
+    font-weight: 800;
     color: #186368;
     margin-bottom: 15px;
 }
