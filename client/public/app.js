@@ -135,9 +135,9 @@ function addList(listInfo) {
             "</div>" +
             "</div>" +
             "<hr />" +
-            "<div id='items-container'></div>" +
             "<div id='list-name-container'></div>" +
-            "<h5 id='notes-label'>Notes</h5>" +
+            "<div id='items-container'></div>" +
+            // "<h5 id='notes-label'>Notes</h5>" +
             "</div>" +
             "</div> " +
             "</div> " +
@@ -198,11 +198,16 @@ function addList(listInfo) {
 
     let listName = document.createElement("h3");
     listName.innerText = listInfo.name;
+    listName.style.fontSize="25px";
+    listName.style.fontWeight="800";
+    listName.style.color="#186368";
+    listName.style.marginBottom="15px";
     itemContainer.appendChild(listName);
 
-    console.log("lsit info " + JSON.stringify(listInfo));
     console.log("name: "+ listInfo.name);
     console.log("budget: " + listInfo.budget);
+    console.log("lsit info " + JSON.stringify(listInfo));
+    
 
     listInfo.items.forEach(item => {
 
@@ -216,9 +221,25 @@ function addList(listInfo) {
         let edit = document.createElement('button');
         
         category.innerText = item.category;
+        category.style.fontSize="18px";
+        category.style.color="#186368";
+        category.style.marginLeft="10px";
+        category.style.marginRight="10px";
         itemName.innerText = item.itemName;
+        itemName.style.fontSize="18px";
+        itemName.style.color="#186368";
+        itemName.style.marginLeft="10px";
+        itemName.style.marginRight="10px";
         notes.innerText = item.notes;
+        notes.style.fontSize="18px";
+        notes.style.color="#186368";
+        notes.style.marginLeft="10px";
+        notes.style.marginRight="10px";
         price.innerText = item.price;
+        price.style.fontSize="18px";
+        price.style.color="#186368";
+        price.style.marginLeft="10px";
+        price.style.marginRight="10px";
         itemInfo.appendChild(category);
         itemInfo.appendChild(itemName);
         itemInfo.appendChild(notes);
@@ -286,7 +307,9 @@ function addList(listInfo) {
         itemContainer.appendChild(itemInfo);
 
         itemInfo.style.display = "flex";
-        itemInfo.style.columnGap = "40px";
+        itemInfo.style.columnGap = "14px";
+        itemInfo.style.marginBottom ="10px";
+        itemInfo.style.marginTop ="10px";
     });
 }
 

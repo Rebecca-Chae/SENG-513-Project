@@ -84,7 +84,8 @@ section {
     height: 400px;
     background-color: #3ECAC1;
     color: white;
-    overflow-x: hidden;
+    overflow-x: 500px;
+
     overflow-y: auto;
 }
 
@@ -126,7 +127,7 @@ hr{
 
 #budget-label{
     float:left;
-    margin-left: 450px;
+    margin-left: 490px;
 }
 #btn-outline-add-item{
     color: white;
