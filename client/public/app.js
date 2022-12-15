@@ -226,15 +226,14 @@ function addList(listInfo) {
         edit.innerText = "Edit";
         edit.addEventListener("click", function(e){
             let updated = e.target.parentElement; // === itemInfo
-            updated.innerHTML = "<label id='form-labels'>" + item.category + ":</label>" +
-            "<input type='text' class='form-control' id ='newCategory' placeholder = '" + item.category + "'>" +
-            "<div id='smaller-items-section'>" +
-            "<label id='form-labels'>" + item.itemName + ":</label>" +
-            "<input type='text' class='form-control' id ='newItemName' placeholder = '" + item.itemName + "'>" +
-            "<label id='form-labels'>" + item.notes + ":</label>" +
-            "<input type='text' class='form-control' id ='newNotes' placeholder = '" + item.notes + "'>"+
-            "<label id='form-labels'>" + item.price + ":</label>" +
-            "<input type='text' class='form-control' id ='newPrice' placeholder = '" + item.price + "'>" + "</div>";
+            updated.innerHTML = "<label id='form-labels'>Category:</label>" +
+            "<input type='text' id ='newCategory' style = 'width: 50px;' placeholder = '" + item.category + "'>" +
+            "<label id='form-labels'>Item:</label>" +
+            "<input type='text' id ='newItemName' style = 'width: 50px;' placeholder = '" + item.itemName + "'>" +
+            "<label id='form-labels'>Notes:</label>" +
+            "<input type='text' id ='newNotes' style = 'width: 50px;' placeholder = '" + item.notes + "'>"+
+            "<label id='form-labels'>Price:</label>" +
+            "<input type='text' id ='newPrice' style = 'width: 50px;' placeholder = '" + item.price + "'>";
             let update = document.createElement('button');    // Button to update
             updated.appendChild(update);
 
