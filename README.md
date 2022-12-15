@@ -20,10 +20,9 @@
 
 ## Running the server
 Note: these commands are to be run from within the `server` directory.
-- In our development environment, you can run the command `npm run dev` to locally start the development server. This will run the server with nodemon so that any time you make changes to our server code, it will automatically restart the server for us.
-- Otherwise, when we're publishing our website, we can start the production server with `npm run start`.
+- In our development environment, you can run the command `npm run dev` to locally start the server.
 - After starting the server, you should see a message in your terminal that says `Server listening on port 3000...`.
-- You can now open a browser and go to [http://localhost:3000/](http://localhost:3000/). You should see the HTML from `client/public/index.html` rendered on the page, styled with the styles defined in `client/public/style.css`. The JS code in `client/public/app.js` should have also been run on the client. If you're on Chrome, you can open the developer console (CTRL+SHIFT+i) and should see a `hello from client` message there.
+- You can now open a browser and go to [http://localhost:3000/](http://localhost:3000/). At this point, you should see a login page and can begin using our app as outline in the `User Manual` secion of our report.
 - Back in your terminal, you should also now see a new message that says `New web socket connection`. You will get another one of these messages each time you manually refresh that browser tab, or open [http://localhost:3000/](http://localhost:3000/) in another tab. To stop the server, you can CTRL+C in your terminal.
 
 ## Notes about file structure
