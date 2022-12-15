@@ -224,20 +224,31 @@ function addList(listInfo) {
         itemInfo.appendChild(edit);
         
         edit.innerText = "Edit";
+        edit.style.color = "white";
+        edit.style.backgroundColor = "#186368";
+        edit.style.border = "none";
+        edit.style.borderRadius = "5px";
+        edit.style.height = "30px";
         edit.addEventListener("click", function(e){
             let updated = e.target.parentElement; // === itemInfo
-            updated.innerHTML = "<label id='form-labels'>Category:</label>" +
-            "<input type='text' id ='newCategory' style = 'width: 50px;' placeholder = '" + item.category + "'>" +
-            "<label id='form-labels'>Item:</label>" +
-            "<input type='text' id ='newItemName' style = 'width: 50px;' placeholder = '" + item.itemName + "'>" +
-            "<label id='form-labels'>Notes:</label>" +
-            "<input type='text' id ='newNotes' style = 'width: 50px;' placeholder = '" + item.notes + "'>"+
-            "<label id='form-labels'>Price:</label>" +
-            "<input type='text' id ='newPrice' style = 'width: 50px;' placeholder = '" + item.price + "'>";
+            updated.innerHTML = "<label id='form-labels' style = 'color: #186368;'><b>Category:</b></label>" +
+            "<input type='text' id ='newCategory' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.category + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Item:</b></label>" +
+            "<input type='text' id ='newItemName' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.itemName + "'>" +
+            "<label id='form-labels' style = 'color: #186368;'><b>Notes:</b></label>" +
+            "<input type='text' id ='newNotes' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.notes + "'>"+
+            "<label id='form-labels' style = 'color: #186368;'><b>Price:</b></label>" +
+            "<input type='text' id ='newPrice' style = 'width: 50px; border-radius: 5px; border: none; padding-left: 10px;' placeholder = '" + item.price + "'>";
             let update = document.createElement('button');    // Button to update
             updated.appendChild(update);
 
             update.innerText = "Update";
+            update.style.color = "white";
+            update.style.backgroundColor = "#186368";
+            update.style.border = "none";
+            update.style.borderRadius = "5px";
+            update.style.height = "30px";
+            update.style.width = "100px";
             update.addEventListener("click", function(){
                 let newCategory = document.getElementById('newCategory').value;
                 if (newCategory != ""){
